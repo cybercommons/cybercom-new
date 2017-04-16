@@ -1,24 +1,16 @@
-============
 Installation
 ============
 
-
-
-Cybercommons Cookiecutter
-========================
-
 This repo uses cookiecutter to install the cyberCommons platform on a single node. The cybercommons platform is a microservice architecture that provides a RESTful API (Django REST Framework) , Data Catalog(MongoDB), and Asyncronous workflow system (Celery).
 
-### Installation
-
-##### Dependencies Requirements
+### Dependencies Requirements
 
 1. Docker
     * [Docker Install Documentation](https://docs.docker.com/engine/installation/)
 2. CookieCutter
     * pip install cookiecutter
 
-##### CookieCutter
+### CookieCutter
 Cookiecutter creates the following file structures:
 
 ```
@@ -166,6 +158,3 @@ The runLetsEncrypt script can be manually executed to renew expired certificates
     password: admin
     
 
-Install the package with pip::
-
-    $ pip install read-the-docs-template

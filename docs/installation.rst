@@ -6,11 +6,8 @@ single node. The cybercommons platform is a microservice architecture
 that provides a RESTful API (Django REST Framework) , Data
 Catalog(MongoDB), and Asyncronous workflow system (Celery).
 
-Installation
-~~~~~~~~~~~~
-
 Dependencies Requirements
-'''''''''''''''''''''''''
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Docker
 
@@ -22,7 +19,7 @@ Dependencies Requirements
    -  pip install cookiecutter
 
 CookieCutter
-''''''''''''
+~~~~~~~~~~~~
 
 Cookiecutter creates the following file structures:
 
