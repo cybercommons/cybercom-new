@@ -15,7 +15,7 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
   $ run/genSSLKeys
   ~~~
 
-  *All remote Celery workers will need the new SSL certificates to resume communications. See the section below on where these certificates are stored*
+  *All remote Celery workers will need the new SSL client certificates to resume communications. See the section below on where these certificates are stored*
 
   2. LetsEncrypt certificates can be renewed by running the following from the cyberCommons root directory:
   ~~~
@@ -27,24 +27,24 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
 #### SSL Certificate Locations
   1. Self-signed locations:
      * MongoDB
-      - config/ssl/backend/client/mongodb.pem
-      - config/ssl/backend/server/mongodb.pem
-      - config/ssl/testca/cacert.pem
+       - config/ssl/backend/client/mongodb.pem
+       - config/ssl/backend/server/mongodb.pem
+       - config/ssl/testca/cacert.pem
      * NGINX
-      - config/ssl/nginx/keys/dhparam.pem
-      - config/ssl/nginx/keys/selfsigned.crt
-      - config/ssl/nginx/keys/selfsigned.key
+       - config/ssl/nginx/keys/dhparam.pem
+       - config/ssl/nginx/keys/selfsigned.crt
+       - config/ssl/nginx/keys/selfsigned.key
      * RabbitMQ
-      - config/ssl/backend/client/key.pem
-      - config/ssl/backend/client/cert.pem
-      - config/ssl/backend/server/key.pem
-      - config/ssl/backend/server/cert.pem
-      - config/ssl/testca/cacert.pem
+       - config/ssl/backend/client/key.pem
+       - config/ssl/backend/client/cert.pem
+       - config/ssl/backend/server/key.pem
+       - config/ssl/backend/server/cert.pem
+       - config/ssl/testca/cacert.pem
 
   2. LetsEncrypt location:
      * NGINX
-      - config/ssl/nginx/keys/dhparam.pem
-      - config/ssl/nginx/letcencrypt/etc/live/*
+       - config/ssl/nginx/keys/dhparam.pem
+       - config/ssl/nginx/letcencrypt/etc/live/*
 
 ### Configure Email Backend
 * Uncomment and configure the Email Configuration section in config/api_config.py. *The following is an example using gmail.*
