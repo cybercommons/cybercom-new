@@ -84,7 +84,7 @@ Author and Application Title:
 
 ::
 
-    author [Some Guy]: 
+    author [Some Guy]:
     application_title [Some Application]:
 
 Application Short Name will be a directory name. DO NOT include spaces
@@ -92,14 +92,14 @@ or illegal characters within short name.
 
 ::
 
-    application_short_name [someapp]: 
+    application_short_name [someapp]:
 
 Nginx Server Name is the URL for the web server - default is to use
 "localhost"
 
 ::
 
-    nginx_server_name [localhost]:    
+    nginx_server_name [localhost]:
 
 Use SSL allows for settings up Secure HTTP (HTTPS) connections to the
 Nginx webserver - default is to not enable HTTPS. SSL Valid Days is used
@@ -169,7 +169,7 @@ to set an additional template parameter or access within template.
     $ cd someapp/api_code
     $ docker build -t api .
     $ cd ..
-     
+
 
 3) Build Let's Encrypt Docker Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,7 +183,7 @@ to build its container.
     $ docker build -t certbot .
     $ cd ../../
     $ ./runLetsEncrypt
-        
+
 
 The runLetsEncrypt script can be manually executed to renew expired
 certificates or added to a cron job.
@@ -202,23 +202,23 @@ certificates or added to a cron job.
 
     $ docker ps
 
-    CONTAINER ID    IMAGE            COMMAND                  (Trimmed Output)                                                           
-    8586e51e37a4    nginx            "nginx -g 'daemon off"                                                
+    CONTAINER ID    IMAGE            COMMAND                  (Trimmed Output)
+    8586e51e37a4    nginx            "nginx -g 'daemon off"
     c7ee4754a2fc    api              "gunicorn --config=gu"
-    cca72df2e81f    memcached        "/entrypoint.sh me..."   
-    364d90b9e7e3    cybercom/celery  "/run.sh" 
+    cca72df2e81f    memcached        "/entrypoint.sh me..."
+    364d90b9e7e3    cybercom/celery  "/run.sh"
     12dba22cf2a9    rabbitmq         "/docker-entrypoint.s"
-    b7e6efd64e33    mongo            "/entrypoint.sh mongo"      
+    b7e6efd64e33    mongo            "/entrypoint.sh mongo"
 
 Check Application
-                 
+
 
 1. Web Access **http://<< nginx\_server\_name >>/**
 2. Example portal application with add task **http://<<
    nginx\_server\_name >>/portal**
 3. RESTful API **http://<< nginx\_server\_name >>/api/**
 
-5) RESTful API and Portal Default User
+6) RESTful API and Portal Default User
 ''''''''''''''''''''''''''''''''''''''
 
 ::
