@@ -140,7 +140,7 @@ simultaneously.
     celery_concurrency [8]:
 
 Docker: The docker\_worker and docker\_username are only used when
-celery tasks are going to create a sister/brother docker container. This
+celery tasks are going to create a sibling docker container. This
 is configured in cybercom\_up file in the run directory. The
 docker\_worker is the host where the docker container will be created.
 The docker\_username is a user with ssh keys and has privledges to run

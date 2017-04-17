@@ -104,7 +104,7 @@ Celery Concurrency: The number of concurrent tasks that can run simultaneously.
 
     celery_concurrency [8]:
 
-Docker: The docker_worker and docker_username are only used when celery tasks are going to create a sister/brother docker container. This is configured in cybercom_up file in the run directory. The docker_worker is the host where the docker container will be created. The docker_username is a user with ssh keys and has privledges to run docker commands. ssh keys are not setup and must be done to allow ssh to docker worker.
+Docker: The docker_worker and docker_username are only used when celery tasks are going to create a sibling docker container. This is configured in cybercom_up file in the run directory. The docker_worker is the host where the docker container will be created. The docker_username is a user with ssh keys and has privledges to run docker commands. ssh keys are not setup and must be done to allow ssh to docker worker.
     
     docker_worker [example.oscer.ou.edu]:
     docker_username [mstacy]:
