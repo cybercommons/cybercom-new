@@ -1,7 +1,7 @@
 Installation
 ============
 
-This repo uses cookiecutter to install the cyberCommons platform on a single node. The cybercommons platform is a microservice architecture that provides a RESTful API (Django REST Framework) , Data Catalog(MongoDB), and Asyncronous workflow system (Celery).
+This repo uses cookiecutter to install the cyberCommons platform on a single node. The cyberCommons platform is a microservice architecture that provides a RESTful API (Django REST Framework) , Data Catalog(MongoDB), and Asyncronous workflow system (Celery).
 
 ### Dependencies Requirements
 
@@ -59,7 +59,7 @@ Cookiecutter creates the following file structures:
     ├── genSSLKeys
     └── resetDBCreds
 ```
-### Install Cybercommons Configuration
+### Install cyberCommons Configuration
 
     $ cookiecutter https://github.com/cybercommons/cybercom-cookiecutter.git
 
@@ -130,7 +130,7 @@ If Let's Encrypt was selected during step 1, run the following commands to build
 
 The runLetsEncrypt script can be manually executed to renew expired certificates or added to a cron job.
 
-### Run CyberCommons Platform
+### Run cyberCommons Platform
 
     $ ./run/cybercom_up
 

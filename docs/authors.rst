@@ -4,7 +4,7 @@ Contributors
 cyberCommons History
 ~~~~~~~~~~~~~~~~~~~~
 
-The original cybercommons framework was funded by the National Science
+The original cyberCommons framework was funded by the National Science
 Foundation(NSF) through the Oklahoma EPSCoR Track-II RII
 (`EPS-0919466 <https://www.nsf.gov/awardsearch/showAward?AWD_ID=0919443>`__
 grant. The grant focused on creating a cyberCommons, a powerful,
@@ -13,7 +13,7 @@ across complex environmental phenomena. Specifically, the cyberCommons
 will integrate two frameworks— the science framework of data, models,
 analytics and narratives, and the cyberinfrastructure framework of
 hardware, software, collaboration environment and integration
-environment. The current cybercommons platform has evolved and is used
+environment. The current cyberCommons platform has evolved and is used
 in production for research and automating workflows including:
 
 1. `The Oklahoma Water
@@ -32,7 +32,7 @@ in production for research and automating workflows including:
 Informatics contributions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Original Cybercommons Team
+Original cyberCommons Team
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
@@ -41,7 +41,7 @@ Original Cybercommons Team
     * Brian Cremeans, Research Developer at Intel 
     * Mark Stacy, Director of Informatics, University of Okalahoma Libraries
 
-Current Cybervercommons Team
+Current cyberCommons Team
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
