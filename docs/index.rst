@@ -12,8 +12,8 @@ Contents:
    :numbered:
    :glob:
 
-   installation*
-   *
+    installation.rst
+    *
 
 
 
