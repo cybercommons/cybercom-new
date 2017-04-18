@@ -20,7 +20,7 @@ RabbitMQ and MongoDB. Self-signed certificates for NGINX will be
 generated automatically during configuration if the self-signed option
 was selected during configuration.
 
-LetsEncrypt - refer to the `LetsEncrypt <en/master/installation.html#build-let-s-encrypt-docker-container>`__ 
+LetsEncrypt - refer to the `LetsEncrypt <installation.html#build-let-s-encrypt-docker-container>`__ 
 section of the installation instructions.
 
 Renewing SSL Certificates
