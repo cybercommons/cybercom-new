@@ -1,4 +1,4 @@
-Installation
+1.0 Installation
 ============
 
 This repo uses cookiecutter to install the cyberCommons platform on a
