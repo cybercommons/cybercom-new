@@ -11,16 +11,16 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
 
 #### Renewing SSL Certificates
   1. Self-signed certificates can be updated by running the following command from the cyberCommons root directory:
-  ~~~
-  $ run/genSSLKeys
-  ~~~
+
+  	$ run/genSSLKeys
+
 
   *All remote Celery workers will need the new SSL client certificates to resume communications. See the section below on where these certificates are stored*
 
   2. LetsEncrypt certificates can be renewed by running the following from the cyberCommons root directory:
-  ~~~
+  ~~~~
   $ config/ssl/nginx/runLetsEncrypt
-  ~~~
+  ~~~~
 
   *Follow LetsEncrypt's prompts*
 
