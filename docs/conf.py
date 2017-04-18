@@ -46,7 +46,7 @@ source_suffix = ['.rst',] #'.md']
 master_doc = 'index'
 
 # General information about the project.
-project = u'Read the Docs Template'
+project = u'cyberCommons Framework'
 copyright = u'2014, Read the Docs'
 
 # The version info for the project you're documenting, acts as replacement for
