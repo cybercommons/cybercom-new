@@ -1,11 +1,6 @@
 Contributors
 ============
 
--  Mark Stacy, Director of Informatics, University of Okalahoma
-   Libraries
--  Tyler Pearson, Informatics Specialist, University of Okalahoma
-   Libraries
-
 cyberCommons History
 ~~~~~~~~~~~~~~~~~~~~
 
