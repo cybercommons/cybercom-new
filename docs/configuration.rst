@@ -20,7 +20,7 @@ RabbitMQ and MongoDB. Self-signed certificates for NGINX will be
 generated automatically during configuration if the self-signed option
 was selected during configuration.
 
-LetsEncrypt - refer to the `LetsEncrypt <installation.html#build-let-s-encrypt-docker-container>`__ 
+LetsEncrypt - refer to the `LetsEncrypt <installation.html#build-let-s-encrypt-docker-container>`__
 section of the installation instructions.
 
 Renewing SSL Certificates
@@ -57,7 +57,7 @@ SSL Certificate Locations
       -  config/ssl/backend/server/mongodb.pem
       -  config/ssl/testca/cacert.pem
    -  NGINX
-      
+
       -  config/ssl/nginx/keys/dhparam.pem
       -  config/ssl/nginx/keys/selfsigned.crt
       -  config/ssl/nginx/keys/selfsigned.key
@@ -88,7 +88,7 @@ Configure Email Backend
     # Uncomment and configure to enable send email
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_PORT = 587 
+    EMAIL_PORT = 587
     EMAIL_HOST_USER = 'username@gmail.com'
     EMAIL_HOST_PASSWORD = 'password'
     EMAIL_USE_TLS = True
@@ -124,3 +124,24 @@ Add Admin User to MongoDB
 ::
 
     $ run/resetDBCreds
+
+Open RabbitMQ and MongoDB Ports for Remote Workers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Edit run/cybercom_up with the following changes
+    -  Edit MongoDB config to include port 27017
+
+::
+
+    docker run -d -p 27017:27017 --name example_mongo \
+
+
+    -  Edit RabbitMQ config to include port 5671
+
+::
+
+    #Rabbitmq
+    echo "************** Rabbitmq        ***********"
+    docker run -d -p 5671:5671 --name example_rabbitmq \
+
+2. Update firewall rules on host to allow access to these ports

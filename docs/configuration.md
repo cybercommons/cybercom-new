@@ -77,3 +77,18 @@ mongo_admin_role=root
 ~~~
 $ run/resetDBCreds
 ~~~
+
+### Open RabbitMQ and MongoDB Ports for Remote Workers
+1. Edit run/cybercom_up with the following changes
+  * Edit MongoDB config to include port 27017
+  ~~~
+  docker run -d -p 27017:27017 --name example_mongo \
+  ~~~
+
+  * Edit RabbitMQ config to include port 5671
+  ~~~
+  #Rabbitmq
+  echo "************** Rabbitmq        ***********"
+  docker run -d -p 5671:5671 --name example_rabbitmq \
+  ~~~
+2. Update firewall rules on host to allow access to these ports
