@@ -1,9 +1,6 @@
 RESTful API
 ===========
 
-Task Execution (celery)
-~~~~~~~~~~~~~~~~~~~~~~~
-
 Catalog and Data Store
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -76,7 +73,7 @@ format:
 query:
 ''''''
 
-The query url parameter holds the JSON format query language. Please see
+The query url parameter is a JSON format query language. Please see
 below
 
 Query Language
@@ -89,9 +86,74 @@ syntax.
 Create Database and Collections
 '''''''''''''''''''''''''''''''
 
-visual
+Create Database
+               
 
 ::
 
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/?format=json
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/.json    
+        View: /api/data_store/data/  HTTP Request: Post
+        Data: {"database":"mydata"}  Format: JSON
+        
+
+Delete Database
+               
+
+::
+
+        View: /api/data_store/data/  HTTP Request: Post
+        Data: {"action":"delete","database":"mydata"}  Format: JSON        
+
+Create Collection
+                 
+
+::
+
+        View: /api/data_store/data/mydata  HTTP Request: Post
+        Data: {"collection":"mycollection"}  Format: JSON
+
+Delete Collection
+                 
+
+::
+
+        View: /api/data_store/data/mydata  HTTP Request: Post
+        Data: {"action":"delete","collection":"mycollection"}  Format: JSON
+
+Query Language
+''''''''''''''
+
+The following examples are on the collection view.
+
+Filter Query
+            
+
+::
+
+        ?query={"filter":{"tag":"content"}}
+
+        ?query={"filter":{"tag":"content","tag2":"content"}}
+        
+        # Return fields
+
+        ?query={"filter":{"tag":"content","tag2":"content"},"projection":{"tag":0}
+
+Distinct Query
+''''''''''''''
+
+::
+
+        ?action=distinct&field=test
+        # Include query parameter
+        ?action=distinct&field=bag&query={"filter":{"department":"Informatics"}}
+
+Group By Query
+''''''''''''''
+
+::
+
+        ?action=groupby&groupby=department&variable=rate
+        # Multiple fields in groupby and query field
+        ?action=groupby&groupby=department,bag&variable=rate&query={"filter":{"department":"Informatics"}}
+
+Task Execution (celery)
+~~~~~~~~~~~~~~~~~~~~~~~

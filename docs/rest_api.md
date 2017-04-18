@@ -1,10 +1,6 @@
 RESTful API
 ============
 
-
-### Task Execution (celery)
-
-
 ### Catalog and Data Store
 
 The Catalog and Data Store are using the same logic and syntax for access and query language. The database which holds the information is MongoDB. MongoDB is a schemaless document noSQL database. The query language that the API deploys is the json representation of MongoDB.
@@ -59,7 +55,7 @@ The page variable will move to the page requested. If the page does not exist th
 
 ##### query:
 
-The query url parameter holds the JSON format query language. Please see below
+The query url parameter is a JSON format query language. Please see below
 
 
 #### Query Language
@@ -68,9 +64,59 @@ The API query language is based from the [MongoDB pyhton query](https://docs.mon
 
 ##### Create Database and Collections
 
+###### Create Database
+
+        View: /api/data_store/data/  HTTP Request: Post
+        Data: {"database":"mydata"}  Format: JSON
+        
+
+###### Delete Database
+
+        View: /api/data_store/data/  HTTP Request: Post
+        Data: {"action":"delete","database":"mydata"}  Format: JSON        
+
+###### Create Collection
+
+        View: /api/data_store/data/mydata  HTTP Request: Post
+        Data: {"collection":"mycollection"}  Format: JSON
+
+###### Delete Collection
+
+        View: /api/data_store/data/mydata  HTTP Request: Post
+        Data: {"action":"delete","collection":"mycollection"}  Format: JSON
+
+##### Query Language
+
+The following examples are on the collection view.
+
+###### Filter Query
+
+        ?query={"filter":{"tag":"content"}}
+
+        ?query={"filter":{"tag":"content","tag2":"content"}}
+        
+        # Return fields
+
+        ?query={"filter":{"tag":"content","tag2":"content"},"projection":{"tag":0}
 
 
-visual
+##### Distinct Query
 
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/?format=json
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/.json    
+        ?action=distinct&field=test
+        # Include query parameter
+        ?action=distinct&field=bag&query={"filter":{"department":"Informatics"}}
+
+##### Group By Query
+
+        ?action=groupby&groupby=department&variable=rate
+        # Multiple fields in groupby and query field
+        ?action=groupby&groupby=department,bag&variable=rate&query={"filter":{"department":"Informatics"}}
+
+### Task Execution (celery)
+
+
+
+
+
+
+        
