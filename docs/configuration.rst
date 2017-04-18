@@ -135,6 +135,7 @@ Open RabbitMQ and MongoDB Ports for Remote Workers
 
     docker run -d -p 27017:27017 --name example_mongo \
 
+
     -  Edit RabbitMQ config to include port 5671
 
 ::
