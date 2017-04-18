@@ -1,5 +1,5 @@
-Installation remote worker
-==========================
+Install Remote Workers
+======================
 
 cyberCommons can scale horizontally by allowing remote workers to take
 on tasks and execute them on remote systems. The following describes how
