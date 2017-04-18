@@ -12,22 +12,6 @@ access and query language. The database which holds the information is
 MongoDB. MongoDB is a schemaless document noSQL database. The query
 language that the API deploys is the json representation of MongoDB.
 
-API Renderers
-^^^^^^^^^^^^^
-
-1. api (Default) - Return type is HTML format
-2. json - Return type is JSON format
-3. jsonp - Return type is JSONP format
-4. xml - Return type is xml format
-
-Example
-'''''''
-
-::
-
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/?format=json
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/.json 
-
 API Return Data Structure
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -79,7 +63,35 @@ exist the last page will be shown.
 format:
 '''''''
 
-See above for Renderer syntax
+1. api (Default) - Return type is HTML format
+2. json - Return type is JSON format
+3. jsonp - Return type is JSONP format
+4. xml - Return type is xml format
+
+   ::
+
+       https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/?format=json
+       https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/.json
 
 query:
 ''''''
+
+The query url parameter holds the JSON format query language. Please see
+below
+
+Query Language
+^^^^^^^^^^^^^^
+
+The API query language is based from the `MongoDB pyhton
+query <https://docs.mongodb.com/manual/tutorial/query-documents/#python>`__
+syntax.
+
+Create Database and Collections
+'''''''''''''''''''''''''''''''
+
+visual
+
+::
+
+        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/?format=json
+        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/.json    
