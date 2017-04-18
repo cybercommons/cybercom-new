@@ -7,7 +7,7 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
 #### Generating SSL certificates
   Self-signed certificates are automatically generated on first run for RabbitMQ and MongoDB. Self-signed certificates for NGINX will be generated automatically during configuration if the self-signed option was selected during configuration.
 
-  LetsEncrypt - refer to step 3 of the installation instructions.
+  LetsEncrypt - refer to the [LetsEncrypt](en/master/installation.html#build-let-s-encrypt-docker-container) section of the installation instructions.
 
 #### Renewing SSL Certificates
   1. Self-signed certificates can be updated by running the following command from the cyberCommons root directory:
