@@ -12,6 +12,7 @@ Contents:
    :numbered:
 
    installation
+   configuration
    remote_worker
    rest_api
    permissions
