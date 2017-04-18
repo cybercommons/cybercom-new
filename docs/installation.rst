@@ -6,7 +6,7 @@ single node. The cybercommons platform is a microservice architecture
 that provides a RESTful API (Django REST Framework) , Data
 Catalog(MongoDB), and Asyncronous workflow system (Celery).
 
-Dependencies Requirements
+1.1 Dependencies Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Docker
@@ -18,7 +18,7 @@ Dependencies Requirements
 
    -  pip install cookiecutter
 
-CookieCutter
+1.2 CookieCutter
 ~~~~~~~~~~~~
 
 Cookiecutter creates the following file structures:
@@ -70,7 +70,7 @@ Cookiecutter creates the following file structures:
         ├── genSSLKeys
         └── resetDBCreds
 
-1) Install Cybercommons Configuration
+2.0 Install Cybercommons Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -161,7 +161,7 @@ to set an additional template parameter or access within template.
 
     application_install_directory [/opt]:
 
-2) Build API Docker Container
+2.1 Build API Docker Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -171,7 +171,7 @@ to set an additional template parameter or access within template.
     $ cd ..
 
 
-3) Build Let's Encrypt Docker Container
+2.2 Build Let's Encrypt Docker Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If Let's Encrypt was selected during step 1, run the following commands
@@ -188,14 +188,14 @@ to build its container.
 The runLetsEncrypt script can be manually executed to renew expired
 certificates or added to a cron job.
 
-4) Run CyberCommons Platform
+2.3 Run CyberCommons Platform
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     $ ./run/cybercom_up
 
-5) Successful Installation
+2.4 Successful Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -218,7 +218,7 @@ Check Application
    nginx\_server\_name >>/portal**
 3. RESTful API **http://<< nginx\_server\_name >>/api/**
 
-6) RESTful API and Portal Default User
+2.5 RESTful API and Portal Default User
 ''''''''''''''''''''''''''''''''''''''
 
 ::
