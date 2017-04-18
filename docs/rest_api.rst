@@ -119,8 +119,8 @@ Delete Collection
         View: /api/data_store/data/mydata  HTTP Request: Post
         Data: {"action":"delete","collection":"mycollection"}  Format: JSON
 
-Query Language
-''''''''''''''
+Filter Query
+''''''''''''
 
 The following examples are on the collection view.
 

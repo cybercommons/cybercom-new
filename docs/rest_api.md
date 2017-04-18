@@ -85,7 +85,7 @@ The API query language is based from the [MongoDB pyhton query](https://docs.mon
         View: /api/data_store/data/mydata  HTTP Request: Post
         Data: {"action":"delete","collection":"mycollection"}  Format: JSON
 
-##### Query Language
+##### Filter Query
 
 The following examples are on the collection view.
 
