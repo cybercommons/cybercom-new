@@ -1,4 +1,4 @@
-1.0 Installation
+Installation
 ============
 
 This repo uses cookiecutter to install the cyberCommons platform on a
@@ -6,7 +6,7 @@ single node. The cybercommons platform is a microservice architecture
 that provides a RESTful API (Django REST Framework) , Data
 Catalog(MongoDB), and Asyncronous workflow system (Celery).
 
-1.1 Dependencies Requirements
+Dependencies Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Docker
@@ -18,7 +18,7 @@ Catalog(MongoDB), and Asyncronous workflow system (Celery).
 
    -  pip install cookiecutter
 
-1.2 CookieCutter
+CookieCutter
 ~~~~~~~~~~~~
 
 Cookiecutter creates the following file structures:
@@ -70,8 +70,8 @@ Cookiecutter creates the following file structures:
         ├── genSSLKeys
         └── resetDBCreds
 
-2.0 Install Cybercommons Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install Cybercommons Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -99,7 +99,7 @@ Nginx Server Name is the URL for the web server - default is to use
 
 ::
 
-    nginx_server_name [localhost]:
+    nginx_server_name [localhost]:    
 
 Use SSL allows for settings up Secure HTTP (HTTPS) connections to the
 Nginx webserver - default is to not enable HTTPS. SSL Valid Days is used
@@ -140,10 +140,10 @@ simultaneously.
     celery_concurrency [8]:
 
 Docker: The docker\_worker and docker\_username are only used when
-celery tasks are going to create a sibling docker container. This
-is configured in cybercom\_up file in the run directory. The
-docker\_worker is the host where the docker container will be created.
-The docker\_username is a user with ssh keys and has privledges to run
+celery tasks are going to create a sibling docker container. This is
+configured in cybercom\_up file in the run directory. The docker\_worker
+is the host where the docker container will be created. The
+docker\_username is a user with ssh keys and has privledges to run
 docker commands. ssh keys are not setup and must be done to allow ssh to
 docker worker.
 
@@ -161,8 +161,8 @@ to set an additional template parameter or access within template.
 
     application_install_directory [/opt]:
 
-2.1 Build API Docker Container
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Build API Docker Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -170,9 +170,8 @@ to set an additional template parameter or access within template.
     $ docker build -t api .
     $ cd ..
 
-
-2.2 Build Let's Encrypt Docker Container
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Build Let's Encrypt Docker Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If Let's Encrypt was selected during step 1, run the following commands
 to build its container.
@@ -184,42 +183,41 @@ to build its container.
     $ cd ../../
     $ ./runLetsEncrypt
 
-
 The runLetsEncrypt script can be manually executed to renew expired
 certificates or added to a cron job.
 
-2.3 Run CyberCommons Platform
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run CyberCommons Platform
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     $ ./run/cybercom_up
 
-2.4 Successful Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Successful Installation
+~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     $ docker ps
 
-    CONTAINER ID    IMAGE            COMMAND                  (Trimmed Output)
-    8586e51e37a4    nginx            "nginx -g 'daemon off"
+    CONTAINER ID    IMAGE            COMMAND                  (Trimmed Output)                                                           
+    8586e51e37a4    nginx            "nginx -g 'daemon off"                                                
     c7ee4754a2fc    api              "gunicorn --config=gu"
-    cca72df2e81f    memcached        "/entrypoint.sh me..."
+    cca72df2e81f    memcached        "/entrypoint.sh me..."   
     364d90b9e7e3    cybercom/celery  "/run.sh"
     12dba22cf2a9    rabbitmq         "/docker-entrypoint.s"
-    b7e6efd64e33    mongo            "/entrypoint.sh mongo"
+    b7e6efd64e33    mongo            "/entrypoint.sh mongo"      
 
 Check Application
-
+^^^^^^^^^^^^^^^^^
 
 1. Web Access **http://<< nginx\_server\_name >>/**
 2. Example portal application with add task **http://<<
    nginx\_server\_name >>/portal**
 3. RESTful API **http://<< nginx\_server\_name >>/api/**
 
-2.5 RESTful API and Portal Default User
-''''''''''''''''''''''''''''''''''''''
+RESTful API and Portal Default User
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 

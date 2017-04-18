@@ -59,7 +59,7 @@ Cookiecutter creates the following file structures:
     ├── genSSLKeys
     └── resetDBCreds
 ```
-###1) Install Cybercommons Configuration
+### Install Cybercommons Configuration
 
     $ cookiecutter https://github.com/cybercommons/cybercom-cookiecutter.git
 
@@ -114,13 +114,13 @@ Application Install Directory: This is a work around for finding the current app
     application_install_directory [/opt]:
 
 
-###2) Build API Docker Container
+### Build API Docker Container
 
     $ cd someapp/api_code
     $ docker build -t api .
     $ cd ..
 
-###3) Build Let's Encrypt Docker Container
+### Build Let's Encrypt Docker Container
 If Let's Encrypt was selected during step 1, run the following commands to build its container.
 
     $ cd someapp/config/ssl/nginx/letsencrypt/dockerfiles
@@ -130,11 +130,11 @@ If Let's Encrypt was selected during step 1, run the following commands to build
 
 The runLetsEncrypt script can be manually executed to renew expired certificates or added to a cron job.
 
-###4) Run CyberCommons Platform
+### Run CyberCommons Platform
 
     $ ./run/cybercom_up
 
-###5) Successful Installation
+### Successful Installation
 
     $ docker ps
 
@@ -146,13 +146,13 @@ The runLetsEncrypt script can be manually executed to renew expired certificates
     12dba22cf2a9    rabbitmq         "/docker-entrypoint.s"
     b7e6efd64e33    mongo            "/entrypoint.sh mongo"      
 
-###### Check Application
+#### Check Application
 1. Web Access __http://<< nginx_server_name >>/__
 2. Example portal application with add task  __http://<< nginx_server_name >>/portal__
 3. RESTful API  __http://<< nginx_server_name >>/api/__
 
 
-#####6) RESTful API and Portal Default User
+### RESTful API and Portal Default User
 
     username: admin
     password: admin
