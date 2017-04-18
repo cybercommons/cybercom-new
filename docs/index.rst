@@ -15,6 +15,7 @@ Contents:
    remote_worker
    rest_api
    permissions
+   help
    authors
 
 
