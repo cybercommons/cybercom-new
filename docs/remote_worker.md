@@ -8,7 +8,7 @@ The execution units, called tasks, are executed concurrently on a single or more
 ### Requirements
 
 * PIP - [Install](https://packaging.python.org/install_requirements_linux/#installing-pip-setuptools-wheel-with-linux-package-managers)
-* Copies of client certificates to communicate with central cyberCommons server:
+* Copies of client certificates and credentials to communicate with central cyberCommons server:
   - MongoDB
     - config/ssl/backend/client/mongodb.pem
     - config/ssl/testca/cacert.pem
@@ -16,6 +16,7 @@ The execution units, called tasks, are executed concurrently on a single or more
     - config/ssl/backend/client/key.pem
     - config/ssl/backend/client/cert.pem
     - config/ssl/testca/cacert.pem
+* Open RabbitMQ and MongoDB ports on the cyberCommons server
 
 ### Install Celery
 
@@ -82,4 +83,3 @@ The execution units, called tasks, are executed concurrently on a single or more
 * Run in foreground
 
         $ celery worker -l info -Q remote -n dev-mstacy1
-

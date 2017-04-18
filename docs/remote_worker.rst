@@ -17,18 +17,21 @@ Requirements
 
 -  PIP -
    `Install <https://packaging.python.org/install_requirements_linux/#installing-pip-setuptools-wheel-with-linux-package-managers>`__
--  Copies of client certificates to communicate with central
+-  Copies of client certificates and credentials to communicate with central
    cyberCommons server:
--  MongoDB
 
-   -  config/ssl/backend/client/mongodb.pem
-   -  config/ssl/testca/cacert.pem
+   -  MongoDB
 
--  RabbitMQ
+      -  config/ssl/backend/client/mongodb.pem
+      -  config/ssl/testca/cacert.pem
 
-   -  config/ssl/backend/client/key.pem
-   -  config/ssl/backend/client/cert.pem
-   -  config/ssl/testca/cacert.pem
+   -  RabbitMQ
+
+      -  config/ssl/backend/client/key.pem
+      -  config/ssl/backend/client/cert.pem
+      -  config/ssl/testca/cacert.pem
+
+-  Open RabbitMQ and MongoDB ports on the cyberCommons server
 
 Install Celery
 ~~~~~~~~~~~~~~
