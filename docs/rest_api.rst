@@ -157,3 +157,81 @@ Group By Query
 
 Task Execution (celery)
 ~~~~~~~~~~~~~~~~~~~~~~~
+
+The Celery Distributed Task Queue is integrated throught the RESTful
+API.
+
+List of Available Tasks and Task History
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+        URL: /api/queue/
+        Task History: /api/queue/usertasks/
+
+Task Submission
+^^^^^^^^^^^^^^^
+
+::
+
+        Example:
+        URL /api/queue/run/cybercomq.tasks.tasks.add/
+        Docstring: Very import to give users the description of task. 
+        Curl Example: Comand-line example with API token
+        
+
+Task HTML POST Data Requirement
+'''''''''''''''''''''''''''''''
+
+::
+
+        {
+            "function": "cybercomq.tasks.tasks.add",
+            "queue": "celery",
+            "args": [],
+            "kwargs": {},
+            "tags": []
+        }
+
+function: task name queue: which queue to route the task args: [] List
+of argument kwargs: {} Keyword arguments tags: [] list of tags that will
+identify task run
+
+Curl Command - Command-line Scripting
+'''''''''''''''''''''''''''''''''''''
+
+::
+
+        curl -X POST --data-ascii '{"function":"cybercomq.tasks.tasks.add","queue":"celery","args":[],"kwargs":{  },"tags": []}' http://localhost/api/queue/run/cybercomq.tasks.tasks.add/.json -H Content-Type:application/json -H 'Authorization: Token < authorized-token > '
+
+Python Script to Execute Script
+'''''''''''''''''''''''''''''''
+
+::
+
+        import requests,json
+
+        headers ={'Content-Type':'application/json',"Authorization":"Token < authorized token >"}
+        data = {"function":"cybercomq.tasks.tasks.add","queue":"celery","args":[2,2],"kwargs":{},"tags":["add"]}
+        req=requests.post("http://localhost/api/queue/run/cybercomq.tasks.tasks.add/.json",data=json.dumps(data),headers=headers) 
+        print(req.text)
+
+Javascript JQuery $.postJSON
+''''''''''''''''''''''''''''
+
+::
+
+        $.postJSON = function(url, data, callback,fail) {
+            return jQuery.ajax({
+                'type': 'POST',
+                'url': url,
+                'contentType': 'application/json',
+                'data': JSON.stringify(data),
+                'dataType': 'json',
+                'success': callback,
+                'error':fail,
+                'beforeSend':function(xhr, settings){
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            });
+        }
