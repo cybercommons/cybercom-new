@@ -10,11 +10,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
    :numbered:
-   :glob:
 
-    installation.rst
-    *
-
+   installation
+   remote_worker
+   authors
 
 
 Indices and tables
