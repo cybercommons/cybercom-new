@@ -82,7 +82,7 @@ Configure Email Backend
 -  Uncomment and configure the Email Configuration section in
    config/api\_config.py. *The following is an example using gmail.*
 
-::
+.. code-block:: python
 
     #*********** Email Configuration ********************
     # Uncomment and configure to enable send email
@@ -98,7 +98,7 @@ Configure Email Backend
    `documentation <https://docs.djangoproject.com/en/1.8/topics/email/>`__
    for more details on configuring email.
 
-::
+.. code-block:: python
 
    ADMINS = [('Jane', 'ccadmin@your.org'), ('John', 'ccadmin2@your.org')]
 
@@ -110,7 +110,7 @@ Add Admin User to MongoDB
    `documentation <https://docs.mongodb.com/manual/reference/built-in-roles/>`__
    for more details on built-in-roles.
 
-::
+.. code-block:: bash
 
     # uncomment and populate the following two lines for the resetDBCreds application to add / update the mongo user admin account
     mongo_admin_username=<adminuser>
@@ -129,16 +129,16 @@ Open RabbitMQ and MongoDB Ports for Remote Workers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Edit run/cybercom_up with the following changes
-    -  Edit MongoDB config to include port 27017
 
-::
+  -  Edit MongoDB config to include port 27017
+
+  .. code-block:: bash
 
     docker run -d -p 27017:27017 --name example_mongo \
 
+  -  Edit RabbitMQ config to include port 5671
 
-    -  Edit RabbitMQ config to include port 5671
-
-::
+  .. code-block:: bash
 
     #Rabbitmq
     echo "************** Rabbitmq        ***********"
