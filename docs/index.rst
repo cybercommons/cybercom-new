@@ -13,6 +13,8 @@ Contents:
 
    installation
    remote_worker
+   rest_api
+   permissions
    authors
 
 
