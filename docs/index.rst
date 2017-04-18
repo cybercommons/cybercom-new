@@ -9,9 +9,10 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+   :numbered:
    :glob:
 
-   installation
+   installation*
    *
 
 
