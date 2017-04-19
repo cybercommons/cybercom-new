@@ -19,7 +19,7 @@ The original cyberCommons framework was funded by the National Science Foundatio
 #### Original cyberCommons Team
 
     * Jonah Duckles, Executive director of Software Carpentry
-    * Brian Cremeans, Research Developer at Intel 
+    * Brian Cremeans, Technical Program Manager at Intel Corporation 
     * Mark Stacy, Director of Informatics, University of Okalahoma Libraries
 
 #### Current cyberCommons Team
