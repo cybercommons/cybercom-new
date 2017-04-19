@@ -9,7 +9,8 @@ The cyberCommons Framework is currently deploy
 
 1. `The Oklahoma Water
    Survey <http://data.oklahomawatersurvey.org/portal/>`__
-2. `EcoPAD <http://ecolab.cybercommons.org/ecopad_portal/>`__
+2. `EcoPAD <http://ecolab.cybercommons.org/ecopad_portal/>`__ is an 
+   ecological platform for data assimilation and forecasting in ecology.
 3. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
 4. `The Totally Awesome Geolocator
    Service <http://tags.animalmigration.org/>`__ (TAGS)
