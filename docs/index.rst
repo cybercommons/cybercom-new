@@ -5,6 +5,22 @@ The cyberCommons Framework is a loosely coupled service-orientated reference arc
 
 .. image:: images/cybercommons.png 
 
+The cyberCommons Framework is currently deploy
+
+1. `The Oklahoma Water
+   Survey <http://data.oklahomawatersurvey.org/portal/>`__
+2. `EcoPAD <http://ecolab.cybercommons.org/ecopad_portal/>`__
+3. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
+4. `The Totally Awesome Geolocator
+   Service <http://tags.animalmigration.org/>`__ (TAGS)
+5. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
+6. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for
+   Microbiologically Influenced Corrosion Studies)
+7. `The South Central Climate Sciences
+   Center <http://southcentralclimate.org/>`__
+8. `University of Oklahoma Libraries <https://libraries.ou.edu/>`__ at
+   the University of Oklahoma.
+
 
 Contents:
 
@@ -25,6 +41,5 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
