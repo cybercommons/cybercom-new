@@ -24,8 +24,7 @@ The cyberCommons Framework currently deployed across a wide variety of environme
    ecological platform for data assimilation and forecasting in ecology.
 3. `The Totally Awesome Geolocator
    Service <http://tags.animalmigration.org/>`__ (TAGS)
-4. `U.S. Congressional Hearings Search
-    Engine <https://cc.lib.ou.edu/hearings/>`__
+4. `US Congressional Hearings Search Engine <https://cc.lib.ou.edu/hearings/>`__ 
 5. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
 6. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
 7. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for
