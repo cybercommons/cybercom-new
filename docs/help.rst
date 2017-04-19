@@ -5,7 +5,7 @@ Help
 ~~~~
 
 This documentation serves as the primary resource for help on the
-`cyberCommons Framework </>`__.
+`cyberCommons Framework <index.html>`__.
 
 Issue Reporting
 ~~~~~~~~~~~~~~~

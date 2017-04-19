@@ -3,7 +3,7 @@ Help and Issue Reporting
 
 ### Help
 
-This documentation serves as the primary resource for help on the [cyberCommons Framework](/).
+This documentation serves as the primary resource for help on the [cyberCommons Framework](index.html).
 
 
 ### Issue Reporting 
