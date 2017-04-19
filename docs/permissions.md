@@ -8,7 +8,7 @@ The Django admin comes with user and permissions functionality.
 
         URL - /api/admin
 
-        ![Django Admin](images/djangoadmin.png)
+![Django Admin](images/djangoadmin.png)
 
 #### User Creation
 
@@ -16,11 +16,7 @@ The users are stored locally and passwords are stored within the database. Djang
 
         URL - /api/admin/auth/user/
         
-        ![User Creation](images/adduser.png)
-
-
-
-
+![User Creation](images/adduser.png)
 
 #### Permissions
 

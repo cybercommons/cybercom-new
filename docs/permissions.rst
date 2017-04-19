@@ -10,7 +10,10 @@ The Django admin comes with user and permissions functionality.
 
         URL - /api/admin
 
-        ![Django Admin](images/djangoadmin.png)
+.. figure:: images/djangoadmin.png
+   :alt: Django Admin
+
+   Django Admin
 
 User Creation
 ^^^^^^^^^^^^^
@@ -23,7 +26,11 @@ authentication functionality.
 
         URL - /api/admin/auth/user/
         
-        ![User Creation](images/adduser.png)
+
+.. figure:: images/adduser.png
+   :alt: User Creation
+
+   User Creation
 
 Permissions
 ^^^^^^^^^^^
