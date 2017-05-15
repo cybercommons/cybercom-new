@@ -145,3 +145,11 @@ Open RabbitMQ and MongoDB Ports for Remote Workers
     docker run -d -p 5671:5671 --name example_rabbitmq \
 
 2. Update firewall rules on host to allow access to these ports
+
+Turn Off Debug Mode for RESTful API
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Set DEBUG = False in config/api_config.py
+2. Add host(s) to ALLOWED_HOSTS list. See Django's documentation on the
+   `ALLOWED_HOSTS <https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-ALLOWED_HOSTS>`__
+   setting for more detail.
