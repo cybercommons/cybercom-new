@@ -10,13 +10,12 @@ The cyberCommons Framework currently deployed across a wide variety of environme
 1. `University of Oklahoma Libraries <https://libraries.ou.edu/>`__ at
    the University of Oklahoma.
 2. `University of Colorado Libraries <https://www.colorado.edu/libraries/>`__ at
-   the University of Colorado.
+   the University of Colorado Boulder.
 3. `The Oklahoma Water Survey <http://www.ou.edu/okh2o>`__ water data web portal.
 4. `US Congressional Hearings Search Engine <https://cc.lib.ou.edu/hearings/>`__
 5. `Latin Search Engine <https://cc.lib.ou.edu/latin-portal/>`__
 6. `Northern Arizona University EcoPAD <https://ecolab.nau.edu/ecopad_portal/>`__ is an
    ecological platform for data assimilation and forecasting in ecology.
-7. `US Congressional Hearings Search Engine <https://cc.lib.ou.edu/hearings/>`__
 8. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
 9. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
 10. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for Microbiologically Influenced Corrosion Studies)
