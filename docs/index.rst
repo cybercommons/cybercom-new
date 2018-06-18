@@ -16,10 +16,10 @@ The cyberCommons Framework currently deployed across a wide variety of environme
 5. `Latin Search Engine <https://cc.lib.ou.edu/latin-portal/>`__
 6. `Northern Arizona University EcoPAD <https://ecolab.nau.edu/ecopad_portal/>`__ is an
    ecological platform for data assimilation and forecasting in ecology.
-8. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
-9. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
-10. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for Microbiologically Influenced Corrosion Studies)
-11. `The South Central Climate Sciences Center <http://southcentralclimate.org/>`__
+7. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
+8. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
+9. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for Microbiologically Influenced Corrosion Studies)
+10. `The South Central Climate Sciences Center <http://southcentralclimate.org/>`__
 
 
 Contents:
