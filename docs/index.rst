@@ -19,8 +19,7 @@ The cyberCommons Framework currently deployed across a wide variety of environme
 7. `US Congressional Hearings Search Engine <https://cc.lib.ou.edu/hearings/>`__
 8. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
 9. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
-10. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for
-   Microbiologically Influenced Corrosion Studies)
+10. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for Microbiologically Influenced Corrosion Studies)
 11. `The South Central Climate Sciences Center <http://southcentralclimate.org/>`__
 
 
