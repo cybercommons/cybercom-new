@@ -17,7 +17,7 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
 
   *All remote Celery workers will need the new SSL client certificates to resume communications. See the section below on where these certificates are stored*
 
-  2. LetsEncrypt certificates can be renewed by running the following from the cyberCommons root directory:
+  1. LetsEncrypt certificates can be renewed by running the following from the cyberCommons root directory:
   ~~~~
   $ config/ssl/nginx/runLetsEncrypt
   ~~~~
@@ -41,7 +41,7 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
        - config/ssl/backend/server/cert.pem
        - config/ssl/testca/cacert.pem
 
-  2. LetsEncrypt location:
+  1. LetsEncrypt location:
      * NGINX
        - config/ssl/nginx/keys/dhparam.pem
        - config/ssl/nginx/letcencrypt/etc/live/*
@@ -73,7 +73,7 @@ mongo_admin_password=<use_strong_password>
 mongo_admin_role=root
 ~~~
 
-2. Run the following command from cyberCommons' root directory. *This step will restart the MongoDB server and create or update the admin user.*
+1. Run the following command from cyberCommons' root directory. *This step will restart the MongoDB server and create or update the admin user.*
 ~~~
 $ run/resetDBCreds
 ~~~
@@ -91,4 +91,8 @@ $ run/resetDBCreds
   echo "************** Rabbitmq        ***********"
   docker run -d -p 5671:5671 --name example_rabbitmq \
   ~~~
-2. Update firewall rules on host to allow access to these ports
+1. Update firewall rules on host to allow access to these ports
+
+### Turn Off Debug Mode for RESTful API
+1. Set DEBUG = False in config/api_config.py
+1. Add host(s) to ALLOWED_HOSTS list. See Django's documentation on the [ALLOWED_HOSTS](https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-ALLOWED_HOSTS) setting for more detail.
