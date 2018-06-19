@@ -11,15 +11,15 @@ The cyberCommons Framework currently deployed across a wide variety of environme
    the University of Oklahoma.
 2. `University of Colorado Libraries <https://www.colorado.edu/libraries/>`__ at
    the University of Colorado Boulder.
-3. `The Oklahoma Water Survey <http://www.ou.edu/okh2o>`__ water data web portal.
-4. `US Congressional Hearings Search Engine <https://cc.lib.ou.edu/hearings/>`__
-5. `Latin Search Engine <https://cc.lib.ou.edu/latin-portal/>`__
-6. `Northern Arizona University EcoPAD <https://ecolab.nau.edu/ecopad_portal/>`__ is an
+3. `US Congressional Hearings Search Engine <https://cc.lib.ou.edu/hearings/>`__
+4. `Latin Search Engine <https://cc.lib.ou.edu/latin-portal/>`__
+5. `Northern Arizona University EcoPAD <https://ecolab.nau.edu/ecopad_portal/>`__ is an
    ecological platform for data assimilation and forecasting in ecology.
-7. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
-8. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
-9. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for Microbiologically Influenced Corrosion Studies)
-10. `The South Central Climate Sciences Center <http://southcentralclimate.org/>`__
+6. `The Oklahoma Biological Survey <http://www.biosurvey.ou.edu/>`__
+7. `The Earth Observation Modeling facility <http://eomf.ou.edu/>`__
+8. `MGMIC <http://mgmic.oscer.ou.edu/>`__ (MetaGenome analysis for Microbiologically Influenced Corrosion Studies)
+9. `The South Central Climate Sciences Center <http://southcentralclimate.org/>`__
+10. `The Oklahoma Water Survey <http://www.ou.edu/okh2o>`__
 
 
 Contents:
