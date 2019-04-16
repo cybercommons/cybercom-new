@@ -1,0 +1,10 @@
+FROM centos
+
+RUN \
+  yum install epel-release -y && \
+  yum install certbot -y && \
+  yum clean all
+
+COPY ./entrypoint.sh /
+
+ENTRYPOINT ["/entrypoint.sh"]

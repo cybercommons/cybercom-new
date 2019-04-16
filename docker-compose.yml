@@ -1,0 +1,58 @@
+version: "3.7"
+services:
+  cybercom_mongo:
+    image: mongo
+    restart: always
+    env_file:
+      - docker_config/cybercom_config.env
+    expose:
+      - 27017
+    ports:
+      - 27017:27107
+    volumes:
+      - mongo_cc:/data/db
+    deploy:
+      restart_policy:
+        condition: on-failure
+  cybercom_rabbitmq:
+    image: rabbitmq:3.6
+    restart: always
+    env_file:
+      - docker_config/cybercom_config.env
+    expose:
+      - 5671
+    deploy:
+      restart_policy:
+        condition: on-failure
+  cybercom_memcache:
+    image: memcached
+    restart: always
+    env_file:
+      - docker_config/cybercom_config.env
+    expose:
+      - 11211
+    ports:
+      - 11211:11211
+    deploy:
+      restart_policy:
+        condition: on-failure
+  cybercom_api:
+    image: api:latest
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        buildno: 1
+    env_file:
+      - docker_config/cybercom_config.env
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - cybercom_mongo
+    deploy:
+      restart_policy:
+        condition: on-failure
+volumes:
+  mongo_cc:
