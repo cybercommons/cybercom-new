@@ -2,57 +2,59 @@ version: "3.7"
 services:
   cybercom_mongo:
     image: mongo
-    restart: always
+    command: --sslMode requireSSL --sslPEMKeyFile /ssl/server/mongodb.pem --sslCAFile /ssl/testca/cacert.pem --auth
+    restart: unless-stopped
     env_file:
-      - docker_config/cybercom_config.env
+      - dc_config/cybercom_config.env
     expose:
       - 27017
-    ports:
-      - 27017:27107
     volumes:
-      - mongo_cc:/data/db
-    deploy:
-      restart_policy:
-        condition: on-failure
+      - cc_mongo:/data/db
+      - ./dc_config/ssl/backend:/ssl
   cybercom_rabbitmq:
     image: rabbitmq:3.6
-    restart: always
+    restart: unless-stopped
     env_file:
-      - docker_config/cybercom_config.env
+      - dc_config/cybercom_config.env
+    volumes:
+      - ./dc_config/ssl/backend:/ssl
     expose:
       - 5671
-    deploy:
-      restart_policy:
-        condition: on-failure
   cybercom_memcache:
     image: memcached
-    restart: always
+    restart: unless-stopped
     env_file:
-      - docker_config/cybercom_config.env
+      - dc_config/cybercom_config.env
     expose:
       - 11211
     ports:
       - 11211:11211
-    deploy:
-      restart_policy:
-        condition: on-failure
-  cybercom_api:
-    image: api:latest
-    build:
-      context: .
-      dockerfile: dockerfile
-      args:
-        buildno: 1
+  cybercom_celery:
+    image: celeryapp
+    restart: unless-stopped
+    build: dc_config/images/celery
+    volumes:
+      - ./dc_config/ssl/backend:/ssl
     env_file:
-      - docker_config/cybercom_config.env
-    expose:
-      - 8000
-    ports:
-      - 8000:8000
+      - dc_config/cybercom_config.env
     depends_on:
       - cybercom_mongo
-    deploy:
-      restart_policy:
-        condition: on-failure
+      - cybercom_rabbitmq
+  cybercom_api:
+    image: api:latest
+    restart: unless-stopped
+    build: .
+    env_file:
+      - dc_config/cybercom_config.env
+    volumes:
+      - ./dc_config/ssl/backend:/ssl
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - cybercom_mongo
+      - cybercom_rabbitmq
 volumes:
-  mongo_cc:
+  cc_mongo:
+    external: true

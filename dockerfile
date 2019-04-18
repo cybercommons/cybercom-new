@@ -15,5 +15,5 @@ WORKDIR /app
 RUN addgroup api && adduser -DH -G api apiuser
 RUN chown apiuser:api -R /app
 
-
-CMD ["/app/startCeleryWorker"]
+EXPOSE 8080
+CMD ["su", "-p", "apiuser", "-c", "gunicorn --config=gunicorn.py api.wsgi:application"]
