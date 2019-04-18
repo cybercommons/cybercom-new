@@ -29,7 +29,12 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
         $ docker-compose build
         $ docker-compose up -d 
-4. Kill
+
+4. API running http://localhost:8080
+    * Username: admin
+    * Password: admincybercom
+
+5. Kill
 
         $ docker-compose down
 
