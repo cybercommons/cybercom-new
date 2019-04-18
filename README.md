@@ -4,7 +4,7 @@ Cybercommons API
 ## DEVELOPMENTAL AT THIS POINT!!!
 
 
-The Cybercommons framework is a Django Rest Framework API. The API leverages MongoDB to provide a Catalog and Data Store assets for storing metadata and data within a JSON document database. The API also includes Celery which is an asynchronous task queue/job queue based on distributed message passing.
+The Cybercommons framework is a Django Rest Framework API. The API leverages MongoDB to provide a Catalog and Data Store for storing metadata and data within a JSON document database. The API also includes Celery which is an asynchronous task queue/job queue based on distributed message passing.
 
 DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment and provide Github Issues or a  Pull Request with added enhancements. 
 
