@@ -57,8 +57,13 @@ class UserProfile(APIView):
         rdata['name'] = data.get_full_name() 
         print(md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())
         rdata['gravator_url']="{0}://www.gravatar.com/avatar/{1}".format(request.scheme,md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest()) 
-        rdata['auth-token']= str(tok[0])
         rdata['groups']=user_groups
+        authscheme={'auth-token':str(tok[0]),
+                    'jwt-auth':{'obtain-token':reverse('token_obtain_pair',request=request),
+                    'refresh-token':reverse('token_refresh',request=request),
+                    'verify-token':reverse('token_verify',request=request)},
+                    }
+        rdata['authentication']= authscheme
         return Response(rdata)
     def post(self,request,format=None):
         user = User.objects.get(pk=self.request.user.id)
