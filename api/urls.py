@@ -4,6 +4,10 @@ from rest_framework import routers
 from django.contrib import admin
 from .views import APIRoot ,UserProfile
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from rest_framework.urlpatterns import format_suffix_patterns
+#from django.conf.urls.i18n import i18n_patterns
+
 #JWT Authentication
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -12,6 +16,10 @@ from rest_framework_simplejwt.views import (
 )
 
 from api import config
+
+
+admin.site.site_header = _(config.APPLICATION_TITLE)
+admin.site.site_title = _(config.APPLICATION_TITLE)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -30,5 +38,9 @@ urlpatterns = [
     path('catalog/',include('catalog.urls')),
     path('user/',UserProfile.as_view(),name='user-list'),
 ]
-admin.site.site_header = _(config.APPLICATION_TITLE)
-admin.site.site_title = _(config.APPLICATION_TITLE)
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'jsonp', 'xml', 'yaml'])
+#urlpatterns = i18n_patterns(format_suffix_patterns(urlpatterns, allowed=['json', 'jsonp', 'xml', 'yaml']))
+
+

@@ -2,7 +2,7 @@ from django.urls import include, path, re_path
 #from django.conf.urls import patterns, url
 from django.contrib import admin
 from cybercom_queue.views import Run, Queue, UserTasks, UserResult,flushMemcache
-from rest_framework.urlpatterns import format_suffix_patterns
+#from rest_framework.urlpatterns import format_suffix_patterns
 
 admin.autodiscover()
 
@@ -14,4 +14,4 @@ urlpatterns = [
      path(r'memcache',flushMemcache.as_view(), name= 'flush-memcache'),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api', 'json', 'jsonp', 'xml', 'yaml'])
+#urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api', 'json', 'jsonp', 'xml', 'yaml'])
