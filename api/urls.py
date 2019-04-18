@@ -6,7 +6,7 @@ from .views import APIRoot ,UserProfile
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework.urlpatterns import format_suffix_patterns
-#from django.conf.urls.i18n import i18n_patterns
+from .jwt_payload import MyTokenObtainPairView
 
 #JWT Authentication
 from rest_framework_simplejwt.views import (
@@ -28,7 +28,7 @@ urlpatterns = [
     path("",APIRoot.as_view()),
     #Authentication and Admin
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    re_path(r'^api/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    re_path(r'^api/token/$', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     re_path(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
     re_path(r'^api/token/verify/$', TokenVerifyView.as_view(), name='token_verify'),
     path('admin/', admin.site.urls),
@@ -41,6 +41,5 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'jsonp', 'xml', 'yaml'])
-#urlpatterns = i18n_patterns(format_suffix_patterns(urlpatterns, allowed=['json', 'jsonp', 'xml', 'yaml']))
 
 
