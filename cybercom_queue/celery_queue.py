@@ -146,6 +146,11 @@ class QueueTask():
         if 'children' in result:
             if type(result['children']) == bytes:
                 result['children'] = pickle.loads(result['children'])
+            try:
+                result['children'] =json.loads(result['children'])
+            except:
+                pass
+
         if 'result' in result:
             if type(result['result']) == bytes:
                 result['result'] = pickle.loads(result['result'])
