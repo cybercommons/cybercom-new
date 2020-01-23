@@ -21,12 +21,12 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 1. Edit values within dc_config/cybercom_config.env
 2. Initialize database
 
-	$ make initdb
+        $ make initdb
 
 3. Build and Deploy
 
         $ make build
-        $ make run 
+        $ make run
 
 4. API running http://localhost:8080
     * Username: admin
