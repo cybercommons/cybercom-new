@@ -14,21 +14,19 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 * Docker
 * Docker Compose
     * `pip install docker-compose`
+* GNU Make or equivalent
 
 ## Installation
 
-1. Initialize
+1. Edit values within dc_config/cybercom_config.env
+2. Initialize database
 
-        $ git clone <git repo url>
-        $ cd cybercommons/dc_config
-        $ ./initializeCybercomDB
-        $ cd ..
+	$ make initdb
 
-2. Edit values within dc_config/cybercom_config.env
 3. Build and Deploy
 
-        $ docker-compose build
-        $ docker-compose up -d 
+        $ make build
+        $ make run 
 
 4. API running http://localhost:8080
     * Username: admin
@@ -36,7 +34,7 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
 5. Kill
 
-        $ docker-compose down
+        $ make stop
 
 ## TODO
 

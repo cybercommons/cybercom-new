@@ -2,9 +2,6 @@
 
 # This script is called inside a mongo container to create / udpate user account
 
-# Pull in config
-source /config.sh
-
 /usr/bin/mongod &
 
 sleep 5

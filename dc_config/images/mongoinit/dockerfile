@@ -1,0 +1,5 @@
+FROM mongo 
+
+COPY addmongouser /addmongouser  
+
+CMD ["./addmongouser"]

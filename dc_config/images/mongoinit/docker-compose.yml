@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  cybercom_mongo_init:
+    image: mongoinit
+    env_file:
+      - ../../cybercom_config.env
+    build: .
+    volumes:
+      - cc_mongo:/data/db
+volumes:
+  cc_mongo:
