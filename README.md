@@ -19,9 +19,9 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 ## Installation
 
 1. Edit values within dc_config/cybercom_config.env
-2. Initialize database
+2. Initialize database and generate internal SSL certs
 
-        $ make initdb
+        $ make init
 
 3. Build and Deploy
 
@@ -38,7 +38,6 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
 ## TODO
 
-1. SSL Creation - current config with preset SSL
-2. NGINX config 
+1. NGINX config 
 2. JWT PAY-LOAD
 3. Integration with Kubernetes
