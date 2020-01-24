@@ -2,7 +2,11 @@ COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
 
 .PHONY: init intidb initssl run stop restart_api
 
-init:
+.EXPORT_ALL_VARIABLES:
+UID=$(shell id -u)
+GID=$(shell id -g)
+
+init: 
 	$(COMPOSE_INIT) build
 	$(COMPOSE_INIT) up
 	$(COMPOSE_INIT) down

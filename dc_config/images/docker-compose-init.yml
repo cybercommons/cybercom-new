@@ -10,6 +10,7 @@ services:
       - cc_mongo:/data/db
   cybercom_openssl_init:
     image: cybercom/openssl
+    user: "${UID}:${GID}"
     command: /ssl/generate
     build: ./openssl
     env_file:
