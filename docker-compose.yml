@@ -2,7 +2,7 @@ version: "3.7"
 services:
   cybercom_mongo:
     image: mongo
-    command: --sslMode requireSSL --sslPEMKeyFile /ssl/server/mongodb.pem --sslCAFile /ssl/testca/cacert.pem --auth
+    command: --tlsMode requireTLS --tlsCertificateKeyFile /ssl/server/mongodb.pem --tlsCAFile /ssl/testca/cacert.pem --auth
     restart: unless-stopped
     env_file:
       - dc_config/cybercom_config.env
