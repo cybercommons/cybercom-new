@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  cybercom_mongo_init:
+    image: mongo
+    command: /addmongouser
+    env_file:
+      - ../cybercom_config.env
+    volumes:
+      - ./mongoinit/addmongouser:/addmongouser
+      - cc_mongo:/data/db
+  cybercom_openssl_init:
+    image: cybercom/openssl
+    command: /ssl/generate
+    build: ./openssl
+    env_file:
+      - ../cybercom_config.env
+    volumes:
+      - ../ssl/backend:/ssl
+volumes:
+  cc_mongo:

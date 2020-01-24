@@ -1,21 +1,30 @@
+COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
+
+.PHONY: init intidb initssl run stop restart_api
+
+init:
+	$(COMPOSE_INIT) build
+	$(COMPOSE_INIT) up
+	$(COMPOSE_INIT) down
+
 initdb:
-	@cd dc_config/images/mongoinit; docker-compose build
-	@cd dc_config/images/mongoinit; docker-compose up
-	@cd dc_config/images/mongoinit; docker-compose down
-.PHONY: initdb
+	$(COMPOSE_INIT) up cybercom_mongo_init
+	$(COMPOSE_INIT) down
+
+initssl:
+	$(COMPOSE_INIT) build cybercom_openssl_init
+	$(COMPOSE_INIT) up cybercom_openssl_init
+	$(COMPOSE_INIT) down
 
 build:
 	@docker-compose build
 
 run:
 	@docker-compose up -d
-.PHONY: run
 
 stop:
 	@docker-compose down
-.PHONY: stop
 
 restart_api:
 	@docker-compose restart cybercom_api
-.PHONY: restart_api
 
