@@ -9,7 +9,7 @@ services:
     expose:
       - 27017
     volumes:
-      - cc_mongo:/data/db
+      - mongodata:/data/db
       - ./dc_config/ssl/backend:/ssl
   cybercom_rabbitmq:
     image: rabbitmq:3.6
@@ -56,5 +56,6 @@ services:
       - cybercom_mongo
       - cybercom_rabbitmq
 volumes:
-  cc_mongo:
+  mongodata:
+    name: cc_mongo
     external: true

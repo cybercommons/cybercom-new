@@ -1,4 +1,4 @@
-COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
+COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml -p cc
 
 .PHONY: init intidb initssl run stop restart_api
 
