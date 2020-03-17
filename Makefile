@@ -1,6 +1,6 @@
 include dc_config/cybercom_config.env
 
-COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml -p $(MONGO_DOCKER_VOLUME_PREFIX)
+COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
 
 .PHONY: init intidb initssl run stop restart_api
 
