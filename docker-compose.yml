@@ -33,6 +33,13 @@ services:
     image: celeryapp
     restart: unless-stopped
     build: dc_config/images/celery
+    cap_add:
+      - MKNOD
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse
     volumes:
       - ./dc_config/ssl/backend:/ssl
     env_file:
@@ -57,5 +64,5 @@ services:
       - cybercom_rabbitmq
 volumes:
   mongodata:
-    name: "${MONGO_DOCKER_VOLUME_PREFIX}_mongo"
+    name: cc_mongo
     external: true
