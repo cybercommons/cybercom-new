@@ -1,5 +1,18 @@
 version: "3.7"
 services:
+  cybercom_nginx:
+    image: nginx:1.17
+    expose:
+      - 80
+      - 443
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - cybercom_api
+    volumes:
+      - ./dc_config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./web:/usr/share/nginx/html
   cybercom_mongo:
     image: mongo
     command: --tlsMode requireTLS --tlsCertificateKeyFile /ssl/server/mongodb.pem --tlsCAFile /ssl/testca/cacert.pem --auth
@@ -57,5 +70,5 @@ services:
       - cybercom_rabbitmq
 volumes:
   mongodata:
-    name: cc_mongo
+    name: "${MONGO_DOCKER_VOLUME_PREFIX}_mongo"
     external: true
