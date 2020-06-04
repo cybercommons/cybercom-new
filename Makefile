@@ -28,8 +28,8 @@ dbshell:
 		--host cybercom_mongo \
 		--tlsCertificateKeyFile /ssl/client/mongodb.pem \
 		--tlsCAFile /ssl/testca/cacert.pem \
-		--username $(MONGO_USERNAME) \
-		--password $(MONGO_PASSWORD)
+		--username $$MONGO_USERNAME \
+		--password $$MONGO_PASSWORD
 
 build:
 	@docker-compose build
