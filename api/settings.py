@@ -28,7 +28,7 @@ CSRF_COOKIE_DOMAIN = None
 
 # If you want to mount API with nginx with location other than /
 # Change to desired url - '/api/'
-FORCE_SCRIPT_NAME = '/'
+FORCE_SCRIPT_NAME = '/api/'
 
 
 # Quick-start development settings - unsuitable for production
@@ -105,6 +105,12 @@ TEMPLATES = [
     },
 ]
 
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#        'LOCATION': f'{config.MEMCACHE_HOST}:{config.MEMCACHE_PORT}',
+#    }
+#}
 
 SETTINGS_EXPORT_VARIABLE_NAME = 'my_settings'
 SETTINGS_EXPORT = [
@@ -202,3 +208,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
