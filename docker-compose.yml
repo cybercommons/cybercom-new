@@ -77,5 +77,5 @@ services:
       - cybercom_rabbitmq
 volumes:
   mongodata:
-    name: cc_mongo
+    name: "${MONGO_DOCKER_VOLUME_PREFIX}_mongo"
     external: true
