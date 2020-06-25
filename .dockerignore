@@ -1,5 +1,11 @@
-docker_config
-startMongo
+# Cybercommons specific
+dc_config
+dockerfile
+Makefile
+web/
+*.yml
+*.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
