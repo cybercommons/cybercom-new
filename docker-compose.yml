@@ -46,6 +46,13 @@ services:
     image: celeryapp
     restart: unless-stopped
     build: dc_config/images/celery
+    cap_add:
+      - MKNOD
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse
     volumes:
       - ./dc_config/ssl/backend:/ssl
     env_file:
