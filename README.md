@@ -38,6 +38,6 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
 ## TODO
 
-1. NGINX config 
+1. NGINX TLS config 
 2. JWT PAY-LOAD
 3. Integration with Kubernetes
