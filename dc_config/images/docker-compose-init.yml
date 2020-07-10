@@ -19,3 +19,4 @@ services:
       - ../ssl/backend:/ssl
 volumes:
   mongo:
+    name: "${MONGO_DOCKER_VOLUME_PREFIX}_mongo"

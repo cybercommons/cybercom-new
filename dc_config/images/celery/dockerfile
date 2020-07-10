@@ -1,8 +1,7 @@
-FROM python:3.6-alpine3.9
+FROM ubuntu:18.04
 
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1 
-
-# Celery Broker and Backend Variables
+ENV VERSION 1.83
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1
 ENV BROKER_USE_SSL=true
 ENV BROKER_URL="amqp://<username>:<password>@<rabbitmq_host>:5671/vhost"
 ENV CELERY_RESULT_BACKEND="mongodb://<username>:<password>@<mongo_host>:27017/?ssl=true&ssl_ca_certs=/ssl/testca/cacert.pem&ssl_certfile=/ssl/client/mongodb.pem" 
@@ -12,21 +11,37 @@ ENV CELERY_IMPORTS=cybercomq
 ENV CELERY_SOURCE=git+https://github.com/cybercommons/cybercomq
 ENV CELERY_QUEUE=celery
 ENV LOG_LEVEL=INFO
-RUN apk add git
+
+RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+ automake \
+ curl \
+ build-essential \
+ libcurl4-openssl-dev \
+ libssl-dev \
+ libfuse-dev \
+ libtool \
+ libxml2-dev mime-support \
+ tar \
+ pkg-config \
+ git \
+ wget \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN curl -L https://github.com/s3fs-fuse/s3fs-fuse/archive/v${VERSION}.tar.gz | tar zxv -C /usr/src
+RUN cd /usr/src/s3fs-fuse-${VERSION} && ./autogen.sh && ./configure --prefix=/usr && make && make install
+
+RUN apt-get update -y && apt-get install imagemagick libxml2-dev libxslt-dev libopenjp2-7 python-dev -y
+
+RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:deadsnakes/ppa && apt-get update && apt-get install -y python3.6
 
 
-WORKDIR /  
+WORKDIR /
 COPY requirements.txt ./  
-RUN pip install --no-cache-dir -r requirements.txt  
-RUN rm requirements.txt  
-
-
-COPY . /app  
+RUN apt-get update && apt-get install -y python3-pip && pip3 install --upgrade pip && pip3 install --no-cache-dir -r requirements.txt
+RUN rm requirements.txt 
+COPY . /app
 WORKDIR /app
+RUN adduser --no-create-home --disabled-password --gecos '' celery && adduser celery celery
+RUN chown celery:celery -R /app && chmod +x /app/start.sh && chmod +x /app/startCeleryWorker
 
-#Setup Celery User
-RUN addgroup celery && adduser -DH -G celery celery
-RUN chown celery:celery -R /app
-
-
-CMD ["/app/startCeleryWorker"]
+ENTRYPOINT ["/app/start.sh"]
