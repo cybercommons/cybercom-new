@@ -19,6 +19,7 @@ services:
     restart: unless-stopped
     env_file:
       - dc_config/cybercom_config.env
+      - dc_config/secrets.env
     expose:
       - 27017
     volumes:
@@ -29,6 +30,7 @@ services:
     restart: unless-stopped
     env_file:
       - dc_config/cybercom_config.env
+      - dc_config/secrets.env
     volumes:
       - ./dc_config/ssl/backend:/ssl
     expose:
@@ -57,6 +59,7 @@ services:
       - ./dc_config/ssl/backend:/ssl
     env_file:
       - dc_config/cybercom_config.env
+      - dc_config/secrets.env
     depends_on:
       - cybercom_mongo
       - cybercom_rabbitmq
@@ -66,6 +69,7 @@ services:
     build: .
     env_file:
       - dc_config/cybercom_config.env
+      - dc_config/secrets.env
     volumes:
       - ./dc_config/ssl/backend:/ssl
     expose:

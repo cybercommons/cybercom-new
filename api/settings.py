@@ -35,12 +35,12 @@ FORCE_SCRIPT_NAME = '/api/'
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v72(^2ijivo248ebcbqr*455=%#w(^_4@j7(h=nqwt6c+6^nm='
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG'))  # True if set
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS', '').split(',') if host]
 
 #Logging
 LOGGING = {

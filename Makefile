@@ -1,4 +1,5 @@
 include dc_config/cybercom_config.env
+include dc_config/secrets.env
 
 COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
 
