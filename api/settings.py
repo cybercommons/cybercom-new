@@ -105,6 +105,7 @@ TEMPLATES = [
     },
 ]
 
+# The cache settings are being propagated elsewhere.
 #CACHES = {
 #    'default': {
 #        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
