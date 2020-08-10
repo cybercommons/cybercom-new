@@ -23,10 +23,10 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
         $ make init
 
-3. Build and Deploy
+3. Build and Deploy on local system.
 
         $ make build
-        $ make run
+        $ make run_without_cert
 
 4. API running http://localhost:8080
     * Username: admin
@@ -36,8 +36,40 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
         $ make stop
 
+
+
+
+### To run cybercommons on servers with a valid domain name.
+
+## Installation
+
+1. Edit values within dc_config/cybercom_config.env.
+2. Initialize database and generate internal SSL certs
+
+        $ make init
+3. Initialize and Get TLS certificates from LetsEncrypt
+        
+        $ make init_certbot
+
+4. Build and Deploy on local system.
+
+        $ make build
+        $ make run
+
+4. API running https://{domain-name-of-server}:8080
+    * Username: admin
+    * Password: admincybercom
+
+5. Kill
+
+        $ make stop
+
+
+
+
+
+
 ## TODO
 
-1. NGINX TLS config 
-2. JWT PAY-LOAD
-3. Integration with Kubernetes
+1. JWT PAY-LOAD
+2. Integration with Kubernetes
