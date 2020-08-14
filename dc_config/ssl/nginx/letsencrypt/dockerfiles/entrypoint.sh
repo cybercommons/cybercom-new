@@ -8,7 +8,7 @@ fi
 
 if [ ! -d /etc/letsencrypt/renewal ];
   then
-    certbot certonly --webroot -w /data/letsencrypt --email $NOTIFY_EMAIL --agree-tos --no-eff-email -d test.cc.lib.ou.edu
+    certbot certonly --webroot -w /data/letsencrypt --email $NOTIFY_EMAIL --agree-tos --no-eff-email -d $FULL_QUALIFIED_DOMAIN_NAME
 else
     certbot renew --noninteractive --quiet
 fi

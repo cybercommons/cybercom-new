@@ -43,8 +43,8 @@ build:
 run:
 	@docker-compose up -d
 
-run_without_cert:
-	@docker-compose -f docker-compose-without-certs.yml up
+run_with_certbot:
+	@docker-compose -f docker-compose-with-certbot.yml up -d
 
 stop:
 	@docker-compose down
