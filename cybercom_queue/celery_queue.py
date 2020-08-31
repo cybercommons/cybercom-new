@@ -1,10 +1,11 @@
 from celery.result import AsyncResult
 import math
 import re
-import pickle
+import pickle  # nosec
 import collections
 import json
 import celery
+import logging
 from pymongo import MongoClient, DESCENDING
 from rest_framework.reverse import reverse
 from collections import OrderedDict
@@ -12,6 +13,9 @@ from datetime import datetime
 
 from celery.task.control import inspect
 from api import config
+
+logger = logging.getLogger(__name__)
+
 
 class celeryConfig:
     BROKER_URL = config.BROKER_URL
@@ -140,15 +144,19 @@ class QueueTask():
             if type(result['traceback']) == bytes:
                 result['traceback'] = pickle.loads(result['traceback'])
             try:
-                result['traceback'] =json.loads(result['traceback'])
+                result['traceback'] = json.loads(result['traceback'])
             except:
+                # FIXME: Why is this a try:except:pass? Added logging
+                logger.error("An error occured during getting json results of traceback")
                 pass
         if 'children' in result:
             if type(result['children']) == bytes:
                 result['children'] = pickle.loads(result['children'])
             try:
-                result['children'] =json.loads(result['children'])
+                result['children'] = json.loads(result['children'])
             except:
+                # FIXME: Why is this a try:except:pass? Added logging
+                logger.error("An error occured during getting json results of children")
                 pass
 
         if 'result' in result:
@@ -159,6 +167,8 @@ class QueueTask():
             try:
                 result['result'] =json.loads(result['result'])
             except:
+                # FIXME: Why is this a try:except:pass? Added logging
+                logger.error("An error occured during getting json results of result")
                 pass
         return result
 
@@ -215,6 +225,8 @@ class QueueTask():
                     try:
                         item['kwargs'][i] = json.loads(v)
                     except:
+                        # FIXME: Why is this a try:except:pass? Added logging
+                        logger.error("An error occured getting items from history")
                         pass
             try:
                 item['result'] = reverse(

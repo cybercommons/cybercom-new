@@ -2,12 +2,16 @@ __author__ = 'mstacy'
 import json
 import math
 import collections
+import logging
 from bson.objectid import ObjectId
 from bson.code import Code
 from operator import itemgetter
 
 from collections import OrderedDict
 from rest_framework.templatetags.rest_framework import replace_query_param
+
+logger = logging.getLogger(__name__)
+
 
 def MongoDistinct(field,DB_MongoClient, database, collection, query=None):
     db = DB_MongoClient
@@ -126,6 +130,8 @@ def MongoDataGet(DB_MongoClient, database, collection,id):
             if data:
                 return data
         except:
+            # FIXME: why is this a try:except:pass? Added logging
+            logger.error("Error getting mongo data")
             pass
     return {"Error":"DATA RECORD NOT FOUND"}
 def MongoDataDelete(DB_MongoClient, database, collection,id):
@@ -151,15 +157,21 @@ def get_id_types(id):
     try:
         results.append(ObjectId(id))
     except:
+        # FIXME: Whys is this a try:except:pass? Added logging
+        logger.debug("failed appending ObjectId(id)")
         pass
     results = results + [id,str(id)]
     try:
         results.append(float(id))
     except:
-        pass
+        # FIXME: Whys is this a try:except:pass? Added logging
+        logger.debug("failed appending float(id)")
+       pass
     try:
         results.append(int(float(str(id))))
     except:
-        pass
+        # FIXME: Whys is this a try:except:pass? Added logging
+        logger.debug("failed appending int(float(str(id))))")
+       pass
     #print results
     return results

@@ -54,9 +54,10 @@ class UserProfile(APIView):
         for g in request.user.groups.all():
             user_groups.append(g.name)
         rdata = serializer.data
-        rdata['name'] = data.get_full_name() 
-        print(md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())
-        rdata['gravator_url']="{0}://www.gravatar.com/avatar/{1}".format(request.scheme,md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest()) 
+        rdata['name'] = data.get_full_name()
+        # The following hash is not used in any security context.
+        print(md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())  # nosec
+        rdata['gravator_url']="{0}://www.gravatar.com/avatar/{1}".format(request.scheme,md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())  # nosec
         rdata['groups']=user_groups
         authscheme={'auth-token':str(tok[0]),
                     'jwt-auth':{'obtain-token':reverse('token_obtain_pair',request=request),
@@ -89,7 +90,8 @@ class UserProfile(APIView):
             user.save()
             tok = Token.objects.get_or_create(user=self.request.user)
             data['name'] = user.get_full_name()
-            data['gravator_url']="{0}://www.gravatar.com/avatar/{1}".format(request.scheme,md5(data['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())
+            # The following hash is not used in any security context.
+            data['gravator_url']="{0}://www.gravatar.com/avatar/{1}".format(request.scheme,md5(data['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())  # nosec
             data['auth-token']= str(tok[0])
             return Response(data)
 
