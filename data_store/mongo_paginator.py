@@ -166,12 +166,12 @@ def get_id_types(id):
     except:
         # FIXME: Whys is this a try:except:pass? Added logging
         logger.debug("failed appending float(id)")
-       pass
+        pass
     try:
         results.append(int(float(str(id))))
     except:
         # FIXME: Whys is this a try:except:pass? Added logging
         logger.debug("failed appending int(float(str(id))))")
-       pass
+        pass
     #print results
     return results
