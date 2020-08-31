@@ -220,14 +220,6 @@ class QueueTask():
         result['meta'] = {'page': page, 'page_size': limit,
                           'pages': math.ceil(float(result['count'])/float(limit))}
         for item in data:
-            if type(item['kwargs']) is dict:
-                for i, v in item['kwargs'].items():
-                    try:
-                        item['kwargs'][i] = json.loads(v)
-                    except:
-                        # FIXME: Why is this a try:except:pass? Added logging
-                        logger.error("An error occured getting items from history")
-                        pass
             try:
                 item['result'] = reverse(
                     'queue-task-result', kwargs={'task_id': item['task_id']}, request=request)
