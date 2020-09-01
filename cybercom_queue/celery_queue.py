@@ -104,18 +104,19 @@ class QueueTask():
         else:
             raise Exception("Not a valid task_id")
 
-    def result(self, task_id=None, redirect=True):
-        """ Get the result of a task  """
-        col = self.db[self.database][self.tomb_collection]
-        if task_id:
-            result = [item for item in col.find({'_id': task_id})]
-            try:
-                result = pickle.loads(result[0]['result'])
-                return result
-            except:
-                raise Exception("Not a valid task_id")
-        else:
-            raise Exception("Not a valid task_id")
+    # TODO: verify the following commented code is unused
+    #def result(self, task_id=None, redirect=True):
+    #    """ Get the result of a task  """
+    #    col = self.db[self.database][self.tomb_collection]
+    #    if task_id:
+    #        result = [item for item in col.find({'_id': task_id})]
+    #        try:
+    #            result = pickle.loads(result[0]['result'])
+    #            return result
+    #        except:
+    #            raise Exception("Not a valid task_id")
+    #    else:
+    #        raise Exception("Not a valid task_id")
 
     def task(self, task_id=None):
         """Return task log and task results"""
@@ -140,36 +141,29 @@ class QueueTask():
             return result
 
     def unpickle_result(self, result):
-        if 'traceback' in result:
+        if result.get('traceback'):
             if type(result['traceback']) == bytes:
-                result['traceback'] = pickle.loads(result['traceback'])
-            try:
-                result['traceback'] = json.loads(result['traceback'])
-            except:
-                # FIXME: Why is this a try:except:pass? Added logging
-                logger.error("An error occured during getting json results of traceback")
-                pass
-        if 'children' in result:
-            if type(result['children']) == bytes:
-                result['children'] = pickle.loads(result['children'])
-            try:
-                result['children'] = json.loads(result['children'])
-            except:
-                # FIXME: Why is this a try:except:pass? Added logging
-                logger.error("An error occured during getting json results of children")
-                pass
+                # FIXME: Do we need to support pickled data?
+                logger.warn("Grabbing pickled data")
+                result['traceback'] = pickle.loads(result['traceback'])  # nosec
+            result['traceback'] = json.loads(result['traceback'])
 
-        if 'result' in result:
+        if result.get('children'):
+            if type(result['children']) == bytes:
+                # FIXME: Do we need to support pickled data?
+                logger.warn("Grabbing pickled data")
+                result['children'] = pickle.loads(result['children'])  # nosec
+            result['children'] = json.loads(result['children'])
+
+        if result.get('result'):
             if type(result['result']) == bytes:
-                result['result'] = pickle.loads(result['result'])
+                # FIXME: Do we need to support pickled data?
+                logger.warn("Grabbing pickled data")
+                result['result'] = pickle.loads(result['result'])  #nosec
             if isinstance(result['result'], Exception):
                 result['result'] = "ERROR: {0}".format(str(result['result']))
-            try:
-                result['result'] =json.loads(result['result'])
-            except:
-                # FIXME: Why is this a try:except:pass? Added logging
-                logger.error("An error occured during getting json results of result")
-                pass
+            result['result'] =json.loads(result['result'])
+        
         return result
 
     def reset_tasklist(self, user=None):
