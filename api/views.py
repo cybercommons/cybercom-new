@@ -56,7 +56,6 @@ class UserProfile(APIView):
         rdata = serializer.data
         rdata['name'] = data.get_full_name()
         # The following hash is not used in any security context.
-        print(md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())  # nosec
         rdata['gravator_url']="{0}://www.gravatar.com/avatar/{1}".format(request.scheme,md5(rdata['email'].strip(' \t\n\r').encode('utf-8')).hexdigest())  # nosec
         rdata['groups']=user_groups
         authscheme={'auth-token':str(tok[0]),
