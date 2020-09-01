@@ -46,9 +46,17 @@ ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS', '').split(',') if h
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '[{asctime}] [{module}] [{levelname}] - {message}',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'standard',
         },
     },
     'loggers': {
