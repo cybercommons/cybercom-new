@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  cybercom_nginx:
+    image: nginx:1.17
+    expose:
+      - 80
+      - 443
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ../nginx/config/nginx-bootstrap.conf:/etc/nginx/conf.d/default.conf
+      - ../../web:/usr/share/nginx/html
+  cybercom_certbot:
+    image: certbot
+    build: ../ssl/nginx/letsencrypt/dockerfiles
+    env_file: 
+      - ../cybercom_config.env
+    volumes:
+      - ../ssl/nginx/letsencrypt/etc:/etc/letsencrypt
+      - ../../web:/data/letsencrypt

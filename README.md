@@ -19,25 +19,59 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 ## Installation
 
 1. Edit values within dc_config/cybercom_config.env
-2. Initialize database and generate internal SSL certs
+2. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it. 
+3. Initialize database and generate internal SSL certs
 
         $ make init
 
-3. Build and Deploy
+4. Build and Deploy on local system.
 
         $ make build
         $ make run
 
-4. API running http://localhost:8080
+5. API running http://localhost:8080
     * Username: admin
     * Password: admincybercom
 
-5. Kill
+6. Kill
 
         $ make stop
 
+
+
+
+### To run cybercommons on servers with a valid domain name.
+
+## Installation
+
+1. Edit values within dc_config/cybercom_config.env[FULL_QUALIFIED_DOMAIN_NAME,NOTIFY_EMAIL]
+2. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it.
+3. Initialize database and generate internal SSL certs
+
+        $ make init
+4. Initialize and Get TLS certificates from LetsEncrypt
+        
+        $ make init_certbot
+
+5. Build and Deploy on local system.
+
+        $ make build
+        $ make run_with_certbot
+
+6. API running https://{domain-name-of-server}:8080
+    * Username: admin
+    * Password: admincybercom
+
+7. Kill
+
+        $ make stop
+
+
+
+
+
+
 ## TODO
 
-1. NGINX TLS config 
-2. JWT PAY-LOAD
-3. Integration with Kubernetes
+1. JWT PAY-LOAD
+2. Integration with Kubernetes
