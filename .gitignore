@@ -128,3 +128,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# certs 
+dc_config/ssl/nginx/letsencrypt/etc/
+*.pem

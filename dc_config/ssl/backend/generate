@@ -10,6 +10,8 @@ client=$rootpath/client
 certpath=$testca/certs
 privpath=$testca/private
 
+
+
 if [ -d $testca ]; then rm -rf $testca; fi
 if [ -d $server ]; then rm -rf $server; fi
 if [ -d $client ]; then rm -rf $client; fi
@@ -47,3 +49,6 @@ cat $client/key.pem $client/cert.pem > $client/mongodb.pem
 # Insure key.pem files are readable
 chmod 644 $server/key.pem
 chmod 644 $client/key.pem
+
+# Create DH param private key using openssl for letsencrypt.
+openssl dhparam -out $rootpath/dhparam-2048.pem 2048
