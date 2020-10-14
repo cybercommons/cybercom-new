@@ -72,6 +72,7 @@ services:
       - dc_config/secrets.env
     volumes:
       - ./dc_config/ssl/backend:/ssl
+      - ./db.sqlite3:/app/db.sqlite3
     expose:
       - 8080
     ports:
