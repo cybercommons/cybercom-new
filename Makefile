@@ -37,8 +37,8 @@ dbshell:
 		--username $$MONGO_USERNAME \
 		--password $$MONGO_PASSWORD
 
-db ?= "cybercom"
-collection ?= "catalog"
+db ?= "catalog"
+collection ?= "digital_objects"
 dbexport:
 	@docker-compose exec cybercom_mongo mongoexport \
 		--quiet \
