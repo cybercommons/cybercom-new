@@ -114,7 +114,8 @@ class Run(APIView):
             token = Token.objects.get_or_create(user=self.request.user)
             auth_token = str(token[0])
         else:
-            auth_token = "< authorized-token > "
+            # The following hardcoded value is a placeholder.
+            auth_token = "< authorized-token > "  # nosec
         data = {'task_name': task_name, 'task_docstring': docstring,
                 'queue': 'celery', 'auth_token': auth_token,'task_url': curl_url}
         return Response(data)

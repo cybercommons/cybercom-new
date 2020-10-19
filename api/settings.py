@@ -28,27 +28,35 @@ CSRF_COOKIE_DOMAIN = None
 
 # If you want to mount API with nginx with location other than /
 # Change to desired url - '/api/'
-FORCE_SCRIPT_NAME = '/'
+FORCE_SCRIPT_NAME = '/api/'
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v72(^2ijivo248ebcbqr*455=%#w(^_4@j7(h=nqwt6c+6^nm='
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG'))  # True if set
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS', '').split(',') if host]
 
 #Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '[{asctime}] [{module}] [{levelname}] - {message}',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'standard',
         },
     },
     'loggers': {
@@ -105,6 +113,13 @@ TEMPLATES = [
     },
 ]
 
+# The cache settings are being propagated elsewhere.
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#        'LOCATION': f'{config.MEMCACHE_HOST}:{config.MEMCACHE_PORT}',
+#    }
+#}
 
 SETTINGS_EXPORT_VARIABLE_NAME = 'my_settings'
 SETTINGS_EXPORT = [
@@ -122,7 +137,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGINATE_BY': 50,
+    'PAGINATE_BY': 10,
     'PAGINATE_BY_PARAM': 'page_size',
     'MAX_PAGINATE_BY': 1000000
 }

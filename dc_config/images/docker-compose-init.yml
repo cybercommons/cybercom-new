@@ -5,6 +5,7 @@ services:
     command: /addmongouser
     env_file:
       - ../cybercom_config.env
+      - ../secrets.env
     volumes:
       - ./mongoinit/addmongouser:/addmongouser
       - mongo:/data/db
@@ -15,6 +16,7 @@ services:
     build: ./openssl
     env_file:
       - ../cybercom_config.env
+      - ../secrets.env
     volumes:
       - ../ssl/backend:/ssl
 volumes:

@@ -11,7 +11,11 @@ import datetime
 import decimal
 import types
 import json
+import logging
 from bson.objectid import ObjectId
+
+logger = logging.getLogger(__name__)
+
 
 class JSONEncoder(json.JSONEncoder):
     """
@@ -53,6 +57,8 @@ class JSONEncoder(json.JSONEncoder):
             try:
                 return dict(o)
             except:
+                # FIXME: Why is this a try:except:pass? Added logging
+                logger.error("An error occured during JSON encoding")
                 pass
         elif hasattr(o, '__iter__'):
             return [i for i in o]
