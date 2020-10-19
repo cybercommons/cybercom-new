@@ -44,7 +44,7 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
 ## Installation
 
-1. Edit values within dc_config/cybercom_config.env[FULL_QUALIFIED_DOMAIN_NAME,NOTIFY_EMAIL]
+1. Edit values within dc_config/cybercom_config.env[FULL_QUALIFIED_DOMAIN_NAME,NOTIFY_EMAIL(These values must be set).
 2. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it.
 3. Initialize database and generate internal SSL certs
 
