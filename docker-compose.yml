@@ -4,10 +4,8 @@ services:
     image: nginx:1.17
     expose:
       - 80
-      - 443
     ports:
       - 80:80
-      - 443:443
     depends_on:
       - cybercom_api
     volumes:
