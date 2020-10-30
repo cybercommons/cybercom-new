@@ -2,6 +2,7 @@ version: "3.7"
 services:
   cybercom_nginx:
     image: nginx:1.17
+    restart: unless-stopped
     expose:
       - 80
     ports:
