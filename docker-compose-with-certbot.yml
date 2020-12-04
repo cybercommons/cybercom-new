@@ -26,6 +26,8 @@ services:
       - dc_config/secrets.env
     expose:
       - 27017
+    ports:
+      - 27017:27017
     volumes:
       - mongodata:/data/db
       - ./dc_config/ssl/backend:/ssl
@@ -39,6 +41,8 @@ services:
       - ./dc_config/ssl/backend:/ssl
     expose:
       - 5671
+    ports:
+      - 5671:5671
   cybercom_memcache:
     image: memcached
     restart: unless-stopped
