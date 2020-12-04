@@ -69,7 +69,13 @@ services:
   cybercom_api:
     image: api:latest
     restart: unless-stopped
-    build: .
+    user: "${UID}:${GID}"
+    build: 
+      context: .
+      args:
+        UNAME: apiuser
+        UID: "${UID}"
+        GID: "${GID}"
     env_file:
       - dc_config/cybercom_config.env
       - dc_config/secrets.env

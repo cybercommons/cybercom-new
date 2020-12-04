@@ -27,11 +27,11 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 4. Build and Deploy on local system.
 
         $ make build
+	$ make superuser
         $ make run
 
 5. API running http://localhost
-    * Username: admin
-    * Password: admincybercom
+    * Admin credentials set from above `make superuser` 
 
 6. Kill
 

@@ -3,7 +3,7 @@ include dc_config/secrets.env
 
 COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
 
-.PHONY: init intidb initssl dbshell dbexport dbimport run stop restart_api init_certbot
+.PHONY: init intidb initssl dbshell dbexport dbimport run stop test restart_api init_certbot
 
 .EXPORT_ALL_VARIABLES:
 UID=$(shell id -u)
@@ -22,6 +22,9 @@ initssl:
 	$(COMPOSE_INIT) build cybercom_openssl_init
 	$(COMPOSE_INIT) up cybercom_openssl_init
 	$(COMPOSE_INIT) down
+
+superuser:
+	@docker-compose run --rm cybercom_api ./manage.py createsuperuser 
 
 init_certbot:
 	@docker-compose -f dc_config/images/certbot-initialization.yml build
@@ -74,6 +77,8 @@ run_with_certbot:
 stop:
 	@docker-compose down
 
+test:
+	@docker-compose run --rm cybercom_api ./manage.py test
+
 restart_api:
 	@docker-compose restart cybercom_api
-
