@@ -1,5 +1,6 @@
 # secrets files
 *secrets*
+db.sqlite3
 
 startMongo
 # Byte-compiled / optimized / DLL files
