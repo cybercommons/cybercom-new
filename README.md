@@ -27,7 +27,7 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 4. Build and Deploy on local system.
 
         $ make build
-	$ make superuser
+        $ make superuser
         $ make run
 
 5. API running http://localhost
@@ -36,8 +36,6 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 6. Kill
 
         $ make stop
-
-
 
 
 ### To run cybercommons on servers with a valid domain name.
@@ -56,19 +54,15 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 5. Build and Deploy on local system.
 
         $ make build
+        $ make superuser
         $ make run_with_certbot
 
 6. API running https://{domain-name-of-server}
-    * Username: admin
-    * Password: admincybercom
+    * Admin credentials set from above `make superuser`
 
 7. Kill
 
         $ make stop
-
-
-
-
 
 
 ## TODO
