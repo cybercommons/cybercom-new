@@ -116,13 +116,12 @@ TEMPLATES = [
     },
 ]
 
-# The cache settings are being propagated elsewhere.
-#CACHES = {
-#    'default': {
-#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#        'LOCATION': f'{config.MEMCACHE_HOST}:{config.MEMCACHE_PORT}',
-#    }
-#}
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': f'{config.MEMCACHE_HOST}:{config.MEMCACHE_PORT}',
+    }
+}
 
 SETTINGS_EXPORT_VARIABLE_NAME = 'my_settings'
 SETTINGS_EXPORT = [
