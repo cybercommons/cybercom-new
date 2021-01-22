@@ -166,7 +166,7 @@ class QueueTask():
         
         return result
 
-    def reset_tasklist(self, user=None):
+    def reset_tasklist(self, user="guest"):
         """ 
         Delete and reload memcached record of available tasks, useful for development
         when tasks are being frequently reloaded.
@@ -251,7 +251,7 @@ class QueueTask():
             return temp[0], re.sub(' +', ' ', temp[1])
         return temp[0], ""
 
-    def update_tasks(self,timeout=60000, user="guest"):
+    def update_tasks(self,timeout=6000, user="guest"):
         """ 
         Get list of registered tasks from celery, store in memcache for 
             `timeout` period if set (default to 6000s) if available 
@@ -280,7 +280,7 @@ class QueueTask():
                 for item in self.i.registered().values():
                     REGISTERED_TASKS.update(item)
                 AVAILABLE_QUEUES = set([item[0]["exchange"]["name"]
-                                        for item in i.active_queues().values()])
+                                        for item in self.i.active_queues().values()])
         except:
             REGISTERED_TASKS = set()
             AVAILABLE_QUEUES = set()
