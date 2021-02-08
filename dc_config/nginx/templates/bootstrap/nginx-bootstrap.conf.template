@@ -1,10 +1,10 @@
 server {
     listen       80;
-    server_name  test.cc.lib.ou.edu;
+    server_name  ${NGINX_HOST};
 
-      
+
     location ~ /.well-known/acme-challenge/ {
-    	root /usr/share/nginx/html;
+        root /usr/share/nginx/html;
    }
 
 }

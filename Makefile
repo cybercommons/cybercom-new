@@ -71,9 +71,6 @@ build:
 run:
 	@docker-compose up -d
 
-run_with_certbot:
-	@docker-compose -f docker-compose-with-certbot.yml up -d
-
 stop:
 	@docker-compose down
 
