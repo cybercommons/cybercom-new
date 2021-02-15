@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   cybercom_mongo_init:
-    image: mongo
+    image: mongo:${MONGO_VERSION}
     command: /addmongouser
     env_file:
       - ../cybercom_config.env

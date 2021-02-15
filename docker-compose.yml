@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   cybercom_nginx:
-    image: nginx:1.19.6
+    image: nginx:${NGINX_VERSION}
     restart: unless-stopped
     expose:
       - 80
@@ -20,7 +20,7 @@ services:
     env_file:
       - dc_config/cybercom_config.env
   cybercom_mongo:
-    image: mongo
+    image: mongo:${MONGO_VERSION}
     command: --tlsMode requireTLS --tlsCertificateKeyFile /ssl/server/mongodb.pem --tlsCAFile /ssl/testca/cacert.pem --auth
     restart: unless-stopped
     env_file:
@@ -34,7 +34,7 @@ services:
       - mongodata:/data/db
       - ./dc_config/ssl/backend:/ssl
   cybercom_rabbitmq:
-    image: rabbitmq:3.6
+    image: rabbitmq:${RABBITMQ_VERSION}
     restart: unless-stopped
     env_file:
       - dc_config/cybercom_config.env
@@ -46,7 +46,7 @@ services:
     ports:
       - 5671:5671
   cybercom_memcache:
-    image: memcached
+    image: memcached:${MEMCACHED_VERSION}
     restart: unless-stopped
     env_file:
       - dc_config/cybercom_config.env
@@ -72,7 +72,7 @@ services:
       - cybercom_mongo
       - cybercom_rabbitmq
   cybercom_api:
-    image: api:latest
+    image: api:${API_VERSION}
     restart: unless-stopped
     user: "${UID}:${GID}"
     build:
