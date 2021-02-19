@@ -42,7 +42,7 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
 ## Installation
 
-1. Edit values within dc_config/cybercom_config.env[NGINX_HOST,NOTIFY_EMAIL(These values must be set).
+1. Edit values within dc_config/cybercom_config.env[NGINX_HOST,NOTIFY_EMAIL,NGINX_TEMPLATE(These values must be set).
 2. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it.
 3. Initialize database and generate internal SSL certs
 
@@ -55,7 +55,7 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
         $ make build
         $ make superuser
-        $ make run_with_certbot
+        $ make run
 
 6. API running https://{domain-name-of-server}
     * Admin credentials set from above `make superuser`
