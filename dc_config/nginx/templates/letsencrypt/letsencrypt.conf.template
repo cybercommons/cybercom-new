@@ -1,6 +1,6 @@
 server {
     listen       80;
-    server_name  test.cc.lib.ou.edu;
+    server_name  ${NGINX_HOST};
 
     server_tokens off;
 
@@ -22,20 +22,20 @@ server {
     location = /50x.html {
         root   /usr/share/nginx/html;
     }
-    
+
     location ~ /.well-known/acme-challenge/ {
         root /usr/share/nginx/html;
-    }    
+    }
 
 }
 server {
-    listen	443 ssl default_server;
-    server_name test.cc.lib.ou.edu;
+    listen      443 ssl default_server;
+    server_name ${NGINX_HOST};
 
     server_tokens off;
 
-    ssl_certificate /etc/letsencrypt/live/test.cc.lib.ou.edu/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/test.cc.lib.ou.edu/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem;
 
     ssl_buffer_size 8k;
 
@@ -85,3 +85,4 @@ server {
     }
 
 }
+
