@@ -9,7 +9,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ../nginx/templates/bootstrap/${NGINX_BOOTSTRAP_TEMPLATE:-default}:/etc/nginx/templates/
+      - ../nginx/templates/bootstrap/:/etc/nginx/templates/
       - ../../web:/usr/share/nginx/html
   cybercom_certbot:
     image: certbot
