@@ -1,12 +1,22 @@
 server {
     listen       80;
-    server_name  test.cc.lib.ou.edu;
+    server_name  ${NGINX_HOST};
+
+    server_tokens off;
 
     location / {
+        limit_except GET HEAD POST { deny all; }
         root   /usr/share/nginx/html;
         autoindex on;
         add_header  Cache-Control private;
     }
+
+    location /static {
+        limit_except GET HEAD POST { deny all; }
+        root   /usr/share/nginx/html;
+        autoindex off;
+    }
+
     #error_page  404              /404.html;
     #
     #    # redirect server error pages to the static page /50x.html
@@ -14,7 +24,7 @@ server {
     location = /50x.html {
         root   /usr/share/nginx/html;
     }
-    
+
     # proxy the django api
     #
     location /api/ {
@@ -26,3 +36,4 @@ server {
        proxy_pass http://cybercom_api:8080/;
     }
 }
+

@@ -1,5 +1,9 @@
 FROM python:3.6-slim-buster
 
+ARG UNAME=apiuser
+ARG UID=1000
+ARG GID=1000
+
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1
 
 WORKDIR /
@@ -11,10 +15,11 @@ COPY . /app
 WORKDIR /app
 
 #Setup API User
-RUN useradd -r -U -m apiuser \
-  && chown apiuser:apiuser -R /app
+RUN groupadd -g $GID -o $UNAME \
+  &&  useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME \
+  && chown $UNAME:$UNAME -R /app
 
-USER apiuser
+USER $UNAME
 
 EXPOSE 8080
 CMD ["gunicorn", "--config=gunicorn.py", "api.wsgi:application"]
