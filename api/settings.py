@@ -34,13 +34,16 @@ FORCE_SCRIPT_NAME = '/api/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv('DEBUG'))  # True if set
+DEBUG = bool(os.getenv('DEBUG') in ('True', 'true'))
 
-ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS', '').split(',') if host]
+ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', '').split(',') if host.strip()]
 
 #Logging
 LOGGING = {
@@ -113,13 +116,12 @@ TEMPLATES = [
     },
 ]
 
-# The cache settings are being propagated elsewhere.
-#CACHES = {
-#    'default': {
-#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#        'LOCATION': f'{config.MEMCACHE_HOST}:{config.MEMCACHE_PORT}',
-#    }
-#}
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': f'{config.MEMCACHE_HOST}:{config.MEMCACHE_PORT}',
+    }
+}
 
 SETTINGS_EXPORT_VARIABLE_NAME = 'my_settings'
 SETTINGS_EXPORT = [
