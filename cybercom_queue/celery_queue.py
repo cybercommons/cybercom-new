@@ -1,10 +1,11 @@
 from celery.result import AsyncResult
 import math
 import re
-import pickle
+import pickle  #nosec
 import collections
 import json
 import celery
+import logging
 from pymongo import MongoClient, DESCENDING
 from rest_framework.reverse import reverse
 from collections import OrderedDict
@@ -12,6 +13,9 @@ from datetime import datetime
 
 from celery.task.control import inspect
 from api import config
+
+logger = logging.getLogger(__name__)
+
 
 class celeryConfig:
     BROKER_URL = config.BROKER_URL
@@ -138,14 +142,18 @@ class QueueTask():
     def unpickle_result(self, result):
         if 'traceback' in result:
             if type(result['traceback']) == bytes:
-                result['traceback'] = pickle.loads(result['traceback'])
+            	 # FIXME: Do we need to support pickled data?
+                logger.warn("Grabbing pickled data")
+                result['traceback'] = pickle.loads(result['traceback']) #nosec
             try:
                 result['traceback'] =json.loads(result['traceback'])
             except:
                 pass
         if 'children' in result:
             if type(result['children']) == bytes:
-                result['children'] = pickle.loads(result['children'])
+            	 # FIXME: Do we need to support pickled data?
+                logger.warn("Grabbing pickled data")
+                result['children'] = pickle.loads(result['children']) #nosec
             try:
                 result['children'] =json.loads(result['children'])
             except:
@@ -153,7 +161,9 @@ class QueueTask():
 
         if 'result' in result:
             if type(result['result']) == bytes:
-                result['result'] = pickle.loads(result['result'])
+            	 # FIXME: Do we need to support pickled data?
+                logger.warn("Grabbing pickled data")
+                result['result'] = pickle.loads(result['result']) #nosec
             if isinstance(result['result'], Exception):
                 result['result'] = "ERROR: {0}".format(str(result['result']))
             try:
