@@ -87,6 +87,7 @@ services:
     volumes:
       - ./dc_config/ssl/backend:/ssl
       - ./db.sqlite3:/app/db.sqlite3
+      - ./web/static:/app/static
     expose:
       - 8080
     depends_on:
