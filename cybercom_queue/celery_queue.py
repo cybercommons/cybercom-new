@@ -1,7 +1,7 @@
 from celery.result import AsyncResult
 import math
 import re
-import pickle  # nosec
+import pickle  #nosec
 import collections
 import json
 import celery
@@ -104,19 +104,18 @@ class QueueTask():
         else:
             raise Exception("Not a valid task_id")
 
-    # TODO: verify the following commented code is unused
-    #def result(self, task_id=None, redirect=True):
-    #    """ Get the result of a task  """
-    #    col = self.db[self.database][self.tomb_collection]
-    #    if task_id:
-    #        result = [item for item in col.find({'_id': task_id})]
-    #        try:
-    #            result = pickle.loads(result[0]['result'])
-    #            return result
-    #        except:
-    #            raise Exception("Not a valid task_id")
-    #    else:
-    #        raise Exception("Not a valid task_id")
+    def result(self, task_id=None, redirect=True):
+        """ Get the result of a task  """
+        col = self.db[self.database][self.tomb_collection]
+        if task_id:
+            result = [item for item in col.find({'_id': task_id})]
+            try:
+                result = pickle.loads(result[0]['result'])
+                return result
+            except:
+                raise Exception("Not a valid task_id")
+        else:
+            raise Exception("Not a valid task_id")
 
     def task(self, task_id=None):
         """Return task log and task results"""
@@ -141,29 +140,36 @@ class QueueTask():
             return result
 
     def unpickle_result(self, result):
-        if result.get('traceback'):
+        if 'traceback' in result:
             if type(result['traceback']) == bytes:
-                # FIXME: Do we need to support pickled data?
+            	 # FIXME: Do we need to support pickled data?
                 logger.warn("Grabbing pickled data")
-                result['traceback'] = pickle.loads(result['traceback'])  # nosec
-            result['traceback'] = json.loads(result['traceback'])
-
-        if result.get('children'):
+                result['traceback'] = pickle.loads(result['traceback']) #nosec
+            try:
+                result['traceback'] =json.loads(result['traceback'])
+            except:
+                pass
+        if 'children' in result:
             if type(result['children']) == bytes:
-                # FIXME: Do we need to support pickled data?
+            	 # FIXME: Do we need to support pickled data?
                 logger.warn("Grabbing pickled data")
-                result['children'] = pickle.loads(result['children'])  # nosec
-            result['children'] = json.loads(result['children'])
+                result['children'] = pickle.loads(result['children']) #nosec
+            try:
+                result['children'] =json.loads(result['children'])
+            except:
+                pass
 
-        if result.get('result'):
+        if 'result' in result:
             if type(result['result']) == bytes:
-                # FIXME: Do we need to support pickled data?
+            	 # FIXME: Do we need to support pickled data?
                 logger.warn("Grabbing pickled data")
-                result['result'] = pickle.loads(result['result'])  #nosec
+                result['result'] = pickle.loads(result['result']) #nosec
             if isinstance(result['result'], Exception):
                 result['result'] = "ERROR: {0}".format(str(result['result']))
-            result['result'] =json.loads(result['result'])
-        
+            try:
+                result['result'] =json.loads(result['result'])
+            except:
+                pass
         return result
 
     def reset_tasklist(self, user="guest"):
@@ -214,6 +220,12 @@ class QueueTask():
         result['meta'] = {'page': page, 'page_size': limit,
                           'pages': math.ceil(float(result['count'])/float(limit))}
         for item in data:
+            if type(item['kwargs']) is dict:
+                for i, v in item['kwargs'].items():
+                    try:
+                        item['kwargs'][i] = json.loads(v)
+                    except:
+                        pass
             try:
                 item['result'] = reverse(
                     'queue-task-result', kwargs={'task_id': item['task_id']}, request=request)
