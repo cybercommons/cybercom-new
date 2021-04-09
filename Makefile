@@ -75,7 +75,7 @@ stop:
 	@docker-compose down
 
 test:
-	@docker-compose run --rm cybercom_api ./manage.py test
+	@tox -e django
 
 restart_api:
 	@docker-compose restart cybercom_api
