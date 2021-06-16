@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 from api import config
 
+# FIXME: confirm this is dead code
 class dataStorePermission(permissions.BasePermission):
     """
     DataStore list API View permission.
