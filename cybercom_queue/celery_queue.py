@@ -44,7 +44,7 @@ def check_memcache(host=config.MEMCACHE_HOST, port=config.MEMCACHE_PORT):
 
 class QueueTask():
     def __init__(self):
-        self.db = MongoClient(config.DATA_STORE_MONGO_URI)
+        self.db = app.backend.database.client
         self.database = config.MONGO_DB
         self.collection = config.MONGO_LOG_COLLECTION
         self.tomb_collection = config.MONGO_TOMBSTONE_COLLECTION
@@ -246,22 +246,22 @@ class QueueTask():
         """
         Get task docstring of a registered tasks from celery.
         """
-        # Inspecting the docstring is very time consuming, using memcache to speed up
-        if self.memcache:
-            data = self.memcache_client.get(taskname)
-            if not data:
-                data = self.i.registered('__doc__')
-                self.memcache_client.set(taskname, data, timeout)
+        # Extracting the docstring is very time consuming, using memcache if avaialble
+        doc = self.memcache_client.get(taskname) if self.memcache else None
+        
+        if doc:
+            return doc
         else:
             data = self.i.registered('__doc__')
-
-        for x, v in data.items():
-            for task in v:
-                name, doc = self.get_taskname_doc(task, ']')
-                if name.strip() == taskname.strip():
-                    doc=doc.replace('.\n',' ')
-                    doc=doc.replace('\n','. ')
-                    return doc
+            for x, v in data.items():
+                for task in v:
+                    name, doc = self.get_taskname_doc(task, ']')
+                    if name.strip() == taskname.strip():
+                        doc=doc.replace('.\n',' ')
+                        doc=doc.replace('\n','. ')
+                        if self.memcache:  # add task docstring to memcache
+                            self.memcache_client.set(taskname, doc, timeout)
+                        return doc
         return None
 
     def get_taskname_doc(self, thestring, ending):
