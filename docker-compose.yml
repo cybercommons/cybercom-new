@@ -72,6 +72,10 @@ services:
       - cybercom_mongo
       - cybercom_rabbitmq
   cybercom_api:
+    deploy:
+      resources:
+        limits:
+          cpus: ${API_CPUS}
     image: api:${API_VERSION}
     restart: unless-stopped
     user: "${UID}:${GID}"

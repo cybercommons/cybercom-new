@@ -66,13 +66,13 @@ dbimport:
 		--password $$MONGO_PASSWORD
 
 build:
-	@docker-compose build
+	@docker-compose --compatibility build
 
 run:
-	@docker-compose up -d
+	@docker-compose --compatibility up -d
 
 stop:
-	@docker-compose down
+	@docker-compose --compatibility down
 
 test:
 	@tox -e django
