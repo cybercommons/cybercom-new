@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.views import APIView
 from rest_framework.reverse import reverse
-from pymongo import MongoClient
+#from pymongo import MongoClient
 from api import config
 from .models import dataStore
 # Create your views here.
@@ -15,7 +15,22 @@ from rest_framework_yaml.renderers import YAMLRenderer
 #from rest_framework.renderers import XMLRenderer, YAMLRenderer,JSONPRenderer
 from rest_framework.parsers import JSONParser
 from .permission import  DataStorePermission, createDataStorePermission
- 
+from celery import Celery
+
+
+class celeryConfig:
+    BROKER_URL = config.BROKER_URL
+    BROKER_USE_SSL = config.BROKER_USE_SSL
+    CELERY_SEND_EVENTS = True
+    CELERY_TASK_RESULT_EXPIRES = None
+    CELERY_RESULT_BACKEND = config.CELERY_RESULT_BACKEND
+    CELERY_MONGODB_BACKEND_SETTINGS = config.CELERY_MONGODB_BACKEND_SETTINGS
+
+
+app = Celery()
+app.config_from_object(celeryConfig)
+
+
 class MongoDataStore(APIView):
     permission_classes = ( createDataStorePermission,)
     renderer_classes = (DataBrowsableAPIRenderer, mongoJSONRenderer, mongoJSONPRenderer, XMLRenderer, YAMLRenderer)
@@ -26,7 +41,8 @@ class MongoDataStore(APIView):
     name = "Data Store"
     exclude= config.DATA_STORE_EXCLUDE
     def __init__(self):
-        self.db = MongoClient(host=self.connect_uri)
+        #self.db = MongoClient(host=self.connect_uri)
+        self.db = app.backend.database.client
     def get(self, request, database=None, format=None):
         #self.db = MongoClient(host=self.connect_uri)
         urls = []
@@ -119,7 +135,8 @@ class DataStore(APIView):
     parser_classes = (JSONParser,)
     connect_uri = config.DATA_STORE_MONGO_URI
     def __init__(self):
-        self.db = MongoClient(host=self.connect_uri)
+        #self.db = MongoClient(host=self.connect_uri)
+        self.db = app.backend.database.client
 
     def get(self, request, database=None, collection=None, format=None):
         #self.db = MongoClient(host=self.connect_uri)
@@ -168,7 +185,8 @@ class DataStoreDetail(APIView):
     parser_classes = (JSONParser,)
     connect_uri = config.DATA_STORE_MONGO_URI
     def __init__(self):
-        self.db = MongoClient(host=self.connect_uri)
+        #self.db = MongoClient(host=self.connect_uri)
+        self.db = app.backend.database.client
     def get(self,request,database=None, collection=None,id=None, format=None):
         data = MongoDataGet(self.db,database,collection,id)
         return Response(data)

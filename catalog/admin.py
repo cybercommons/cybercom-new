@@ -4,7 +4,22 @@ from django.contrib.auth.models import Permission
 # Register your models here.
 from api import config
 from .models import catalogModel
-from pymongo import MongoClient
+#from pymongo import MongoClient
+from celery import Celery
+
+
+class celeryConfig:
+    BROKER_URL = config.BROKER_URL
+    BROKER_USE_SSL = config.BROKER_USE_SSL
+    CELERY_SEND_EVENTS = True
+    CELERY_TASK_RESULT_EXPIRES = None
+    CELERY_RESULT_BACKEND = config.CELERY_RESULT_BACKEND
+    CELERY_MONGODB_BACKEND_SETTINGS = config.CELERY_MONGODB_BACKEND_SETTINGS
+
+
+app = Celery()
+app.config_from_object(celeryConfig)
+
 
 def setpermissions(app_label,codename,name):
     ct = ContentType.objects.get_for_model(catalogModel)
@@ -12,7 +27,8 @@ def setpermissions(app_label,codename,name):
     Permission.objects.get_or_create(codename=codename, name=name, content_type=ct)
 
 #Catalog Permissions
-db = MongoClient(host=config.CATALOG_URI)
+#db = MongoClient(host=config.CATALOG_URI)
+db = app.backend.database.client
 for catalog in config.CATALOG_INCLUDE:
     for col in db[catalog].collection_names():
         if not (col in config.CATALOG_EXCLUDE):

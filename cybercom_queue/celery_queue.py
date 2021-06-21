@@ -6,7 +6,7 @@ import json
 import logging
 import memcache
 
-from pymongo import MongoClient, DESCENDING
+from pymongo import DESCENDING
 from rest_framework.reverse import reverse
 from collections import OrderedDict
 from datetime import datetime
