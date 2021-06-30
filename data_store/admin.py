@@ -32,7 +32,7 @@ def setpermissions(app_label,codename,name):
 #data Store Permissions
 #db = MongoClient(host=config.DATA_STORE_MONGO_URI)
 db = app.backend.database.client
-for database in db.database_names():
+for database in db.list_database_names():
     if not (database in config.DATA_STORE_EXCLUDE):
         for col in db[database].collection_names():
             if not (col in config.DATA_STORE_EXCLUDE):

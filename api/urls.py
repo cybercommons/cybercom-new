@@ -3,7 +3,7 @@ from rest_framework import routers
 #from tutorial import views
 from django.contrib import admin
 from .views import APIRoot ,UserProfile
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework.urlpatterns import format_suffix_patterns
 from .jwt_payload import MyTokenObtainPairView
@@ -18,8 +18,8 @@ from rest_framework_simplejwt.views import (
 from api import config
 
 
-admin.site.site_header = _(config.APPLICATION_TITLE)
-admin.site.site_title = _(config.APPLICATION_TITLE)
+admin.site.site_header = gettext_lazy(config.APPLICATION_TITLE)
+admin.site.site_title = gettext_lazy(config.APPLICATION_TITLE)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
