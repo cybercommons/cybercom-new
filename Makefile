@@ -2,6 +2,7 @@ include dc_config/cybercom_config.env
 include dc_config/secrets.env
 
 COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
+CERTBOT_INIT = docker-compose -f dc_config/images/certbot-initialization.yml
 
 .PHONY: init intidb initssl dbshell dbexport dbimport run stop test restart_api init_certbot
 
@@ -27,9 +28,16 @@ superuser:
 	@docker-compose run --rm cybercom_api ./manage.py createsuperuser 
 
 init_certbot:
-	@docker-compose -f dc_config/images/certbot-initialization.yml build
-	@docker-compose -f dc_config/images/certbot-initialization.yml up --abort-on-container-exit
-	@docker-compose -f dc_config/images/certbot-initialization.yml down
+	$(CERTBOT_INIT) build
+	$(CERTBOT_INIT) up --abort-on-container-exit
+	$(CERTBOT_INIT) down
+
+renew_certbot:
+	$(CERTBOT_INIT) run --rm cybercom_certbot
+	# FIXME: the following is not reloading certs
+	#@docker-compose exec cybercom_nginx nginx -s reload
+	# This is a work around until the reload signal is fixed
+	@docker-compose restart cybercom_nginx
 
 dbshell:
 	@docker-compose exec cybercom_mongo mongo admin \

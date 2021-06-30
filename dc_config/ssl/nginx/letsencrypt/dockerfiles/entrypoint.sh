@@ -2,7 +2,7 @@
 
 if [ -z "$NOTIFY_EMAIL" ];
   then 
-   echo "Email address must be set for letsencrypt in cybercom_config.env"
+   echo "NOTIFY_EMAIL must be set for letsencrypt in secrets.env"
    exit 0
 fi 
 

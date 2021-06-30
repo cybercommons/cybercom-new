@@ -14,8 +14,9 @@ services:
   cybercom_certbot:
     image: certbot
     build: ../ssl/nginx/letsencrypt/dockerfiles
-    env_file: 
-      - ../cybercom_config.env
+    environment: 
+      - NOTIFY_EMAIL
+      - NGINX_HOST
     volumes:
       - ../ssl/nginx/letsencrypt/etc:/etc/letsencrypt
       - ../../web:/data/letsencrypt
