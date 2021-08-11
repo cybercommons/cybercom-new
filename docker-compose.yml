@@ -55,7 +55,10 @@ services:
   cybercom_celery:
     image: celeryapp
     restart: unless-stopped
-    build: dc_config/images/celery
+    build: 
+      context: dc_config/images/celery
+      args:
+        - DOCKER_PYTHON_VERSION
     #cap_add:
     #  - MKNOD
     #  - SYS_ADMIN
@@ -85,6 +88,7 @@ services:
         UNAME: apiuser
         UID: "${UID}"
         GID: "${GID}"
+        DOCKER_PYTHON_VERSION:
     env_file:
       - dc_config/cybercom_config.env
       - dc_config/secrets.env
