@@ -24,9 +24,6 @@ initssl:
 	$(COMPOSE_INIT) up cybercom_openssl_init
 	$(COMPOSE_INIT) down
 
-superuser:
-	@docker-compose run --rm cybercom_api ./manage.py createsuperuser 
-
 init_certbot:
 	$(CERTBOT_INIT) build
 	$(CERTBOT_INIT) up --abort-on-container-exit
@@ -73,6 +70,8 @@ dbimport:
 		--username $$MONGO_USERNAME \
 		--password $$MONGO_PASSWORD
 
+all: build collectstatic superuser
+
 build:
 	@docker-compose --compatibility build
 
@@ -85,9 +84,12 @@ stop:
 test:
 	@tox -e django
 
+superuser:
+	@docker-compose run --rm cybercom_api ./manage.py createsuperuser 
+
 restart_api:
 	@docker-compose restart cybercom_api
 
 collectstatic:
-	@docker-compose run --rm cybercom_api ./manage.py collectstatic
+	@docker-compose run --rm cybercom_api ./manage.py collectstatic --noinput
 

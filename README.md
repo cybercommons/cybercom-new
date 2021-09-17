@@ -24,16 +24,15 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
 
         $ make init
 
-4. Build and Deploy on local system.
+4. Build and Deploy on local system. You will be prompted to create an admin user account.
 
-        $ make build
-        $ make superuser
+        $ make all
         $ make run
 
 5. API running http://localhost
-    * Admin credentials set from above `make superuser` 
+    * Admin credentials set from above `make all` or create a new admin user using `make superuser` 
 
-6. Kill
+6. Shutdown and stop running instance
 
         $ make stop
 
@@ -51,16 +50,15 @@ DEVELOPMENTAL AT THIS POINT! This is not an offical release. Please experiment a
         
         $ make init_certbot
 
-5. Build and Deploy on local system.
+5. Build and Deploy on local system. You will be prompted to create an admin user account.
 
-        $ make build
-        $ make superuser
+        $ make all
         $ make run
 
 6. API running https://{domain-name-of-server}
-    * Admin credentials set from above `make superuser`
+    * Admin credentials set from above `make all` or create a new admin user using `make superuser`
 
-7. Kill
+7. Shutdown and stop running instance
 
         $ make stop
 

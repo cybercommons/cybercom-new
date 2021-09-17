@@ -3,6 +3,9 @@
 db.sqlite3
 dc_config/cybercom_config.env
 
+# django's web static files
+web/static/admin/*
+
 startMongo
 # Byte-compiled / optimized / DLL files
 __pycache__/
