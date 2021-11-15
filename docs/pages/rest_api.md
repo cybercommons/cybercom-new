@@ -1,11 +1,11 @@
 RESTful API
 ============
 
-### Catalog and Data Store
+## Catalog and Data Store
 
 The Catalog and Data Store are using the same logic and syntax for access and query language. The database which holds the information is MongoDB. MongoDB is a schemaless document noSQL database. The query language that the API deploys is the json representation of MongoDB.
 
-#### API Return Data Structure
+### API Return Data Structure
 
 The API returns data in a consistent structure. 
 
@@ -28,9 +28,9 @@ The API returns data in a consistent structure.
             ]
         }
 
-#### API URL Parameters
+### URL Parameters
 
-##### page_size: 
+#### page_size: 
 
 The page_size returns the available records up to page_size. If more records exist, the next url value will be deployed.
 
@@ -39,21 +39,20 @@ The page_size returns the available records up to page_size. If more records exi
 
 If page_size=0 API will return all records.
 
-##### page:
+#### page:
 
 The page variable will move to the page requested. If the page does not exist the last page will be shown.
 
-##### format: 
+#### format: 
 
 1. api (Default) - Return type is HTML format
 2. json - Return type is JSON format
 3. jsonp - Return type is JSONP format
 4. xml - Return type is xml format
 
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/?format=json
-        https://cc.lib.ou.edu/api/catalog/data/catalog/digital_objects/.json
+        ?format=json
 
-##### query:
+#### query:
 
 The query url parameter is a JSON format query language. Please see below
 
@@ -62,55 +61,56 @@ The query url parameter is a JSON format query language. Please see below
 
 The API query language is based from the [MongoDB pyhton query](https://docs.mongodb.com/manual/tutorial/query-documents/#python) syntax.
 
-##### Create Database and Collections
+#### Create Database and Collections
 
-###### Create Database
+##### Create Database
 
         View: /api/data_store/data/  HTTP Request: Post
         Data: {"database":"mydata"}  Format: JSON
         
 
-###### Delete Database
+##### Delete Database
 
         View: /api/data_store/data/  HTTP Request: Post
         Data: {"action":"delete","database":"mydata"}  Format: JSON        
 
-###### Create Collection
+##### Create Collection
 
         View: /api/data_store/data/mydata  HTTP Request: Post
         Data: {"collection":"mycollection"}  Format: JSON
 
-###### Delete Collection
+##### Delete Collection
 
         View: /api/data_store/data/mydata  HTTP Request: Post
         Data: {"action":"delete","collection":"mycollection"}  Format: JSON
 
-##### Filter Query
+#### Filter Query
 
 The following examples are on the collection view.
 
-###### Filter Query
+##### Filter Query
 
         ?query={"filter":{"tag":"content"}}
 
         ?query={"filter":{"tag":"content","tag2":"content"}}
         
-        # Return fields
+        # Return fields (projection: 0,1)
 
         ?query={"filter":{"tag":"content","tag2":"content"},"projection":{"tag":0}
 
 
-##### Distinct Query
+#### Distinct Query
 
-        ?action=distinct&field=test
+        ?distinct=tag,tag2
         # Include query parameter
-        ?action=distinct&field=bag&query={"filter":{"department":"Informatics"}}
+        ?distinct=tag&query={"filter":{"department":"Informatics"}}
 
-##### Group By Query
+#### MongoDb Aggregation
 
-        ?action=groupby&groupby=department&variable=rate
-        # Multiple fields in groupby and query field
-        ?action=groupby&groupby=department,bag&variable=rate&query={"filter":{"department":"Informatics"}}
+Please refer to [MongoDB Documentation](https://docs.mongodb.com/manual/core/aggregation-pipeline/)
+
+        ?aggregate=[{"$match":{"status": "urgent"}},
+          {"$group":{"_id":"$productName","sumQuantity":{"$sum":"$quantity"}}}]
 
 ### Task Execution (celery)
 
@@ -130,7 +130,7 @@ The Celery Distributed Task Queue is integrated throught the RESTful API.
         Docstring: Very import to give users the description of task. 
         Curl Example: Comand-line example with API token
         
-##### Task HTML POST Data Requirement
+#### Task HTML POST Data Requirement
 
 
         {
@@ -148,11 +148,11 @@ args: [] List of argument
 kwargs: {} Keyword arguments
 tags: [] list of tags that will identify task run
 
-##### Curl Command - Command-line Scripting
+#### Curl Command - Command-line Scripting
 
         curl -X POST --data-ascii '{"function":"cybercomq.tasks.tasks.add","queue":"celery","args":[],"kwargs":{  },"tags": []}' http://localhost/api/queue/run/cybercomq.tasks.tasks.add/.json -H Content-Type:application/json -H 'Authorization: Token < authorized-token > '
 
-##### Python Script to Execute Script
+#### Python Script to Execute Script
 
         import requests,json
 
@@ -161,7 +161,7 @@ tags: [] list of tags that will identify task run
         req=requests.post("http://localhost/api/queue/run/cybercomq.tasks.tasks.add/.json",data=json.dumps(data),headers=headers) 
         print(req.text)
 
-##### Javascript JQuery $.postJSON
+#### Javascript JQuery $.postJSON
 
         //postJSON is custom call for post to cybercommons api
         $.postJSON = function(url, data, callback,fail) {

@@ -5,7 +5,7 @@ cyberCommons can scale horizontally by allowing remote workers to take on tasks 
 
 The execution units, called tasks, are executed concurrently on a single or more worker servers using multiprocessing, Eventlet, or gevent. Tasks can execute asynchronously (in the background) or synchronously (wait until ready).
 
-### Requirements
+## Requirements
 
 * PIP - [Install](https://packaging.python.org/install_requirements_linux/#installing-pip-setuptools-wheel-with-linux-package-managers)
 * Copies of client certificates and credentials to communicate with central cyberCommons server:
@@ -18,7 +18,7 @@ The execution units, called tasks, are executed concurrently on a single or more
     - config/ssl/testca/cacert.pem
 * Open RabbitMQ and MongoDB ports on the cyberCommons server
 
-### Install Celery
+## Install Celery
 
 1. Install Python's virtualenv
 
@@ -36,22 +36,24 @@ The execution units, called tasks, are executed concurrently on a single or more
         (virtpy) $ pip install Celery
 
 
-### Configuration
-#### Get Config Files and Certificates
+## Configuration
+### Get Config Files and Certificates
 
 1. Download example celeryconfig.py and requirements.txt
 
-
-        $ wget https://raw.githubusercontent.com/cybercommons/cybercom-cookiecutter/master/docs/celery_worker/celeryconfig.py
-        $ wget https://raw.githubusercontent.com/cybercommons/cybercom-cookiecutter/master/docs/celery_worker/requirements.txt
+        ```sh
+        $ wget https://raw.githubusercontent.com/cybercommons/cybercommons/master/docs/pages/files/celeryconfig.py
+        ```
 
 2. Create SSL directory and copy cyberCommon's client certificates
 
-        $ mkdir ssl
-        $ cp mongodb.pem ssl/
-        $ cp key.pem ssl/
-        $ cp cert.pem ssl/
-        $ cp cacert.pem ssl/
+        ```sh
+        mkdir ssl
+        cp mongodb.pem ssl/
+        cp key.pem ssl/
+        cp cert.pem ssl/
+        cp cacert.pem ssl/
+        ```
 
 3. Configure celeryconfig.py to point to client certificates and use corresponding credentials
 
@@ -66,7 +68,7 @@ The execution units, called tasks, are executed concurrently on a single or more
 
         CELERY_RESULT_BACKEND = "mongodb://username:password@<mongo_host>:<mongo_port>/?ssl=true&ssl_ca_certs=ssl/cacert.pem>&ssl_certfile=mongodb.pem>"
 
-#### Configure Tasks
+### Configure Tasks
 
 1. Update requirements.txt to include desired libraries and task handlers.
 2. Update celeryconfig.py to import task handlers that have been included in requirements file.

@@ -2,7 +2,7 @@ Users and Persmissions
 ======================
 
 
-### Django Admin Site
+## Django Admin Site
 
 The Django admin comes with user and permissions functionality.
 
@@ -10,7 +10,7 @@ The Django admin comes with user and permissions functionality.
 
 ![Django Admin](images/djangoadmin.png)
 
-#### User Creation
+### User Creation
 
 The users are stored locally and passwords are stored within the database. Django comes with many different modules to extend the authentication functionality.
 
@@ -18,7 +18,7 @@ The users are stored locally and passwords are stored within the database. Djang
         
 ![User Creation](images/adduser.png)
 
-#### Permissions
+### Permissions
 
 The cyberCommons RESTful api provides permissions and groups:
 

@@ -1,15 +1,15 @@
 System Configuration
 ==================
 
-### Generating SSL Keys and Where They are Stored
+## Generating SSL Keys and Where They are Stored
 Rabbitmq and MongoDB are configured to use SSL certificates to secure their communications. By default, during the setup of cyberCommons, these certificates are configured to be valid for 365 days. Once the certificates expire, they will need to be regenerated. If the ssl self-signed option was selected during installation, the certificates generated for the web server (NGINX) will also expire at this time and will need to be regenerated.
 
-#### Generating SSL certificates
+### Generating SSL certificates
   Self-signed certificates are automatically generated on first run for RabbitMQ and MongoDB. Self-signed certificates for NGINX will be generated automatically during configuration if the self-signed option was selected during configuration.
 
   LetsEncrypt - refer to the [LetsEncrypt](installation.html#build-let-s-encrypt-docker-container) section of the installation instructions.
 
-#### Renewing SSL Certificates
+### Renewing SSL Certificates
   1. Self-signed certificates can be updated by running the following command from the cyberCommons root directory:
 
   	$ run/genSSLKeys
@@ -24,7 +24,7 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
 
   *Follow LetsEncrypt's prompts*
 
-#### SSL Certificate Locations
+### SSL Certificate Locations
   1. Self-signed locations:
      * MongoDB
        - config/ssl/backend/client/mongodb.pem
@@ -46,7 +46,7 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
        - config/ssl/nginx/keys/dhparam.pem
        - config/ssl/nginx/letcencrypt/etc/live/*
 
-### Configure Email Backend
+## Configure Email Backend
 * Uncomment and configure the Email Configuration section in config/api_config.py. *The following is an example using gmail.*
 ~~~
 #*********** Email Configuration ********************
@@ -64,7 +64,7 @@ EMAIL_USE_TLS = True
 ADMINS = [('Jane', 'ccadmin@your.org'), ('John', 'ccadmin2@your.org')]
 ~~~
 
-### Add Admin User to MongoDB
+## Add Admin User to MongoDB
 1. Uncomment and configure the following section in the config/config.sh file. *Refer to MongoDB's [documentation](https://docs.mongodb.com/manual/reference/built-in-roles/) for more details on built-in-roles.*
 ~~~
 # uncomment and populate the following two lines for the resetDBCreds application to add / update the mongo user admin account
