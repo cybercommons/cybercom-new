@@ -4,32 +4,32 @@ from django.contrib.auth.models import Permission
 from api import config
 
 # FIXME: confirm this is dead code
-class dataStorePermission(permissions.BasePermission):
-    """
-    DataStore list API View permission.
-    SAFE_METHODS always TRUE
-    UNSAFE need appropriate Permissions
-    """
-    def __init__(self,anonymous=config.DATA_STORE_ANONYMOUS):
-        self.anonymous = anonymous
-    def has_permission(self, request, view):
-        perms=list(request.user.get_all_permissions())
-        if request.method in permissions.SAFE_METHODS:
+# class dataStorePermission(permissions.BasePermission):
+#     """
+#     DataStore list API View permission.
+#     SAFE_METHODS always TRUE
+#     UNSAFE need appropriate Permissions
+#     """
+#     def __init__(self,anonymous=config.DATA_STORE_ANONYMOUS):
+#         self.anonymous = anonymous
+#     def has_permission(self, request, view):
+#         perms=list(request.user.get_all_permissions())
+#         if request.method in permissions.SAFE_METHODS:
             
-            if self.anonymous or code_perm in perms:
-                return True
-            else:
-                return False
-        else:
-            django_app = 'data_store'
-            admin_perm = 'data_store.datastore_admin'
-            path = request.path
-            path=path.split('/')
-            code_perm= "{0}.{1}_{2}_{3}".format(django_app,request.method.lower(), path[-3],path[-2])
-            if request.user.is_superuser or admin_perm in perms or code_perm in perms:
-                return True
-            else:
-                return False 
+#             if self.anonymous or code_perm in perms:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             django_app = 'data_store'
+#             admin_perm = 'data_store.datastore_admin'
+#             path = request.path
+#             path=path.split('/')
+#             code_perm= "{0}.{1}_{2}_{3}".format(django_app,request.method.lower(), path[-3],path[-2])
+#             if request.user.is_superuser or admin_perm in perms or code_perm in perms:
+#                 return True
+#             else:
+#                 return False 
 
 class createDataStorePermission(permissions.BasePermission):
     """
@@ -55,18 +55,23 @@ class DataStorePermission(permissions.BasePermission):
     SAFE_METHODS always TRUE
     UNSAFE need appropriate Permissions
     """
-    def __init__(self,anonymous=config.DATA_STORE_ANONYMOUS):
+    def __init__(self,anonymous=config.DATA_STORE_ANONYMOUS,read_perm_required=config.SAFE_METHOD_PERM_REQUIRED):
         self.anonymous = anonymous
+        self.read_perm_required = read_perm_required
+
     def has_permission(self, request, view):
-        
         django_app = 'data_store'
         admin_perm = 'data_store.datastore_admin'
-        path = request.path.split('/')
-        database = path[path.index(django_app)+2]
-        collection = path[path.index(django_app)+3]
+        database = view.kwargs['database']
+        collection = view.kwargs['collection'] 
         perms=list(request.user.get_all_permissions())
         if request.method in permissions.SAFE_METHODS:
             code_perm= "{0}.{1}_{2}_{3}".format(django_app,database,collection,'safe')
+            if "{0}_{1}".format(database,collection) in self.read_perm_required:
+                if code_perm in perms:
+                    return True
+                else:
+                    return False
             if self.anonymous or admin_perm in perms or code_perm in perms:
                 return True
             else:
