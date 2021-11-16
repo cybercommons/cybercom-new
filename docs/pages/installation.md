@@ -1,0 +1,78 @@
+Installation
+============
+
+
+The Cybercommons framework is a Django Rest Framework API. The API leverages MongoDB to provide a Catalog and Data Store for storing metadata and data within a JSON document database. The API also includes Celery which is an asynchronous task queue/jobs based on distributed message passing.
+
+## Requirements
+
+* Docker
+* Docker Compose
+    * `pip install docker-compose`
+* GNU Make or equivalent
+
+## Installation
+
+1. Edit values within dc_config/cybercom_config.env
+2. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it. 
+3. Initialize database and generate internal SSL certs
+
+    ```sh
+    make init
+    ```    
+4. Build and Deploy on local system.
+
+    ```sh
+    make build
+    make superuser
+    make run
+    ```
+
+5. API running http://localhost
+    * Admin credentials set from above `make superuser` 
+
+6. Kill
+
+    ```sh
+    make stop
+    ```
+
+
+### To run cybercommons on servers with a valid domain name.
+
+## Installation
+
+1. Edit values within dc_config/cybercom_config.env[NGINX_HOST,NOTIFY_EMAIL,NGINX_TEMPLATE(These values must be set).
+1. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it.
+1. Initialize database and generate internal SSL certs
+
+    ```sh
+    make init
+    ```
+
+1. Initialize and Get TLS certificates from LetsEncrypt
+        
+    ```sh
+    make init_certbot
+    ```
+
+1. Build and Deploy on local system.
+
+    ```sh
+    make build
+    make superuser
+    make run
+    ```
+
+1. API running https://{domain-name-of-server}
+    * Admin credentials set from above `make superuser`
+
+1. Kill
+
+    ```sh
+    make stop
+    ```
+
+## TODO
+
+1. Integration with Kubernetes
