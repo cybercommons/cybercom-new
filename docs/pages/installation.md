@@ -34,7 +34,7 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
     make run
     ```
 
-1. Make Django's static content available. This only needs to be ran once or after changing versions of Django.
+1. Make Django’s static content available. It only needs to be run once or after changing versions of Django.
 
     ```sh
     make collectstatic
