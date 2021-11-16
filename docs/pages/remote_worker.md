@@ -45,7 +45,7 @@ The execution units, called tasks, are executed concurrently on a single or more
 wget https://raw.githubusercontent.com/cybercommons/cybercommons/master/docs/pages/files/celeryconfig.py
 ```
 
-1. Create SSL directory and copy cyberCommon's client certificates
+2. Create SSL directory and copy cyberCommon's client certificates
 
 ```sh
 mkdir ssl
@@ -55,7 +55,7 @@ cp cert.pem ssl/
 cp cacert.pem ssl/
 ```
 
-1. Configure celeryconfig.py to point to client certificates and use corresponding credentials (values in this example between "<" and ">" need to be updated to match your cyberCommon's configuration. Do not include the "<" and ">" characters.)
+3. Configure celeryconfig.py to point to client certificates and use corresponding credentials (values in this example between "<" and ">" need to be updated to match your cyberCommon's configuration. Do not include the "<" and ">" characters.)
 
 ```sh
 broker_url = 'amqp://<username>:<password>@<broker_host>:<broker_port>/<broker_vhost>'
