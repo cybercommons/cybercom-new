@@ -41,39 +41,39 @@ The execution units, called tasks, are executed concurrently on a single or more
 
 1. Download example celeryconfig.py and requirements.txt
 
-  ```sh
-  wget https://raw.githubusercontent.com/cybercommons/cybercommons/master/docs/pages/files/celeryconfig.py
-  ```
+```sh
+wget https://raw.githubusercontent.com/cybercommons/cybercommons/master/docs/pages/files/celeryconfig.py
+```
 
 1. Create SSL directory and copy cyberCommon's client certificates
 
-  ```sh
-  mkdir ssl
-  cp mongodb.pem ssl/
-  cp key.pem ssl/
-  cp cert.pem ssl/
-  cp cacert.pem ssl/
-  ```
+```sh
+mkdir ssl
+cp mongodb.pem ssl/
+cp key.pem ssl/
+cp cert.pem ssl/
+cp cacert.pem ssl/
+```
 
 1. Configure celeryconfig.py to point to client certificates and use corresponding credentials (values in this example between "<" and ">" need to be updated to match your cyberCommon's configuration. Do not include the "<" and ">" characters.)
 
-    ```sh
-    broker_url = 'amqp://<username>:<password>@<broker_host>:<broker_port>/<broker_vhost>'
-    broker_use_ssl = {
-        'keyfile': 'ssl/key.pem',
-        'certfile': 'ssl/cert.pem',
-        'ca_certs': 'ssl/cacert.pem',
-        'cert_reqs': ssl.CERT_REQUIRED
-    }
+```sh
+broker_url = 'amqp://<username>:<password>@<broker_host>:<broker_port>/<broker_vhost>'
+broker_use_ssl = {
+    'keyfile': 'ssl/key.pem',
+    'certfile': 'ssl/cert.pem',
+    'ca_certs': 'ssl/cacert.pem',
+    'cert_reqs': ssl.CERT_REQUIRED
+}
 
 
-    result_backend = "mongodb://<username>:<password>@<mongo_host>:<mongo_port>/?ssl=true&ssl_ca_certs=ssl/cacert.pem>&ssl_certfile=mongodb.pem>"
+result_backend = "mongodb://<username>:<password>@<mongo_host>:<mongo_port>/?ssl=true&ssl_ca_certs=ssl/cacert.pem>&ssl_certfile=mongodb.pem>"
 
-    mongodb_backend_settings = {
-        "database": "<application_short_name>",
-        "taskmeta_collection": "tombstone"
-    }
-    ```
+mongodb_backend_settings = {
+    "database": "<application_short_name>",
+    "taskmeta_collection": "tombstone"
+}
+```
 
 ### Configure Tasks
 
