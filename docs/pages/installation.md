@@ -44,9 +44,7 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
     ```
 
 
-### To run cybercommons on servers with a valid domain name.
-
-## Installation
+## cybercommons Installation on servers with a valid domain name.
 
 1. Edit values within dc_config/cybercom_config.env[NGINX_HOST,NOTIFY_EMAIL,NGINX_TEMPLATE(These values must be set).
 1. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it.
