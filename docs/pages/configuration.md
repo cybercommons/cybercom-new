@@ -63,8 +63,6 @@ Rabbitmq and MongoDB are configured to use SSL certificates to secure their comm
 ## Configure Email Backend
 * Populate the Email Configuration section in dc_config/secrets.env. *The following is an example using gmail.*
 ~~~
-#*********** Email Configuration ********************
-# Uncomment and configure to enable send email
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
