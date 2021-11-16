@@ -59,13 +59,6 @@ services:
       context: dc_config/images/celery
       args:
         - DOCKER_PYTHON_VERSION
-    #cap_add:
-    #  - MKNOD
-    #  - SYS_ADMIN
-    #security_opt:
-    #  - apparmor:unconfined
-    #devices:
-    #  - /dev/fuse
     volumes:
       - ./dc_config/ssl/backend:/ssl
     env_file:
