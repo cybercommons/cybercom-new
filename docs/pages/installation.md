@@ -13,6 +13,12 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
 
 ## Installation
 
+1. Clone Repository
+
+    ```sh
+    git clone https://github.com/cybercommons/cybercommons.git
+    ```
+
 1. Edit values within dc_config/cybercom_config.env
 1. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it. 
 1. Initialize database and generate internal SSL certs
