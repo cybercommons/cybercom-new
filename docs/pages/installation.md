@@ -14,13 +14,13 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
 ## Installation
 
 1. Edit values within dc_config/cybercom_config.env
-2. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it. 
-3. Initialize database and generate internal SSL certs
+1. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it. 
+1. Initialize database and generate internal SSL certs
 
     ```sh
     make init
     ```    
-4. Build and Deploy on local system.
+1. Build and Deploy on local system.
 
     ```sh
     make build
@@ -28,10 +28,16 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
     make run
     ```
 
-5. API running http://localhost
+1. Make Django's static content available. This only needs to be ran once or after changing versions of Django.
+
+    ```sh
+    make collectstatic
+    ```
+
+1. API running http://localhost
     * Admin credentials set from above `make superuser` 
 
-6. Kill
+1. Shutdown cybercommons
 
     ```sh
     make stop
@@ -64,10 +70,16 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
     make run
     ```
 
+1. Make Django's static content available. This only needs to be ran once or after changing versions of Django.
+
+    ```sh
+    make collectstatic
+    ```
+
 1. API running https://{domain-name-of-server}
     * Admin credentials set from above `make superuser`
 
-1. Kill
+1. Shutdown cybercommons
 
     ```sh
     make stop

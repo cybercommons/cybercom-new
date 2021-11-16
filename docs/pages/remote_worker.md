@@ -10,28 +10,25 @@ The execution units, called tasks, are executed concurrently on a single or more
 * PIP - [Install](https://packaging.python.org/install_requirements_linux/#installing-pip-setuptools-wheel-with-linux-package-managers)
 * Copies of client certificates and credentials to communicate with central cyberCommons server:
   - MongoDB
-    - config/ssl/backend/client/mongodb.pem
-    - config/ssl/testca/cacert.pem
+    - dc_config/ssl/backend/client/mongodb.pem
+    - dc_config/ssl/testca/cacert.pem
   - RabbitMQ
-    - config/ssl/backend/client/key.pem
-    - config/ssl/backend/client/cert.pem
-    - config/ssl/testca/cacert.pem
-* Open RabbitMQ and MongoDB ports on the cyberCommons server
+    - dc_config/ssl/backend/client/key.pem
+    - dc_config/ssl/backend/client/cert.pem
+    - dc_config/ssl/testca/cacert.pem
+* RabbitMQ and MongoDB ports are open by default:
+  - RabbitMQ port 5671
+  - MongoDB port 27017
 
 ## Install Celery
 
-1. Install Python's virtualenv
+1. Create virtual environment and activate
 
-        $ pip install virtualenv
-
-2. Create virtual environment and activate
-
-
-        $ virtualenv virtpy
+        $ python -m venv virtpy
         $ source virtpy/bin/activate
 
 
-3. Install Celery
+1. Install Celery
 
         (virtpy) $ pip install Celery
 
@@ -55,10 +52,10 @@ The execution units, called tasks, are executed concurrently on a single or more
         cp cacert.pem ssl/
         ```
 
-3. Configure celeryconfig.py to point to client certificates and use corresponding credentials
+3. Configure celeryconfig.py to point to client certificates and use corresponding credentials (values in this example between "<" and ">" need to be updated to match your cyberCommon's configuration. Do not include the "<" and ">" characters.)
 
-        BROKER_URL = 'amqp://username:password@<broker_host>:<broker_port>/<broker_vhost>'
-        BROKER_USE_SSL = {
+        broker_url = 'amqp://<username>:<password>@<broker_host>:<broker_port>/<broker_vhost>'
+        broker_use_ssl = {
             'keyfile': 'ssl/key.pem',
             'certfile': 'ssl/cert.pem',
             'ca_certs': 'ssl/cacert.pem',
@@ -66,14 +63,19 @@ The execution units, called tasks, are executed concurrently on a single or more
         }
 
 
-        CELERY_RESULT_BACKEND = "mongodb://username:password@<mongo_host>:<mongo_port>/?ssl=true&ssl_ca_certs=ssl/cacert.pem>&ssl_certfile=mongodb.pem>"
+        result_backend = "mongodb://<username>:<password>@<mongo_host>:<mongo_port>/?ssl=true&ssl_ca_certs=ssl/cacert.pem>&ssl_certfile=mongodb.pem>"
+
+        mongodb_backend_settings = {
+            "database": "<application_short_name>",
+            "taskmeta_collection": "tombstone"
+        }
 
 ### Configure Tasks
 
 1. Update requirements.txt to include desired libraries and task handlers.
 2. Update celeryconfig.py to import task handlers that have been included in requirements file.
 
-        CELERY_IMPORTS = ("cybercomq", "name_of_additional_task_handler_library", )
+        imports = ("cybercomq", "name_of_additional_task_handler_library", )
 
 3. Install requirements
 
@@ -82,6 +84,6 @@ The execution units, called tasks, are executed concurrently on a single or more
 
 ### Launch Celery worker
 
-* Run in foreground
+* Run in foreground. See [Celery Worker Documentation](https://docs.celeryproject.org/en/stable/reference/cli.html#celery-worker) for more information.
 
-        $ celery worker -l info -Q remote -n dev-mstacy1
+        $ celery worker -Q remote -l INFO -n dev-hostname
