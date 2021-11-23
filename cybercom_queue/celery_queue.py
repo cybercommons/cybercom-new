@@ -70,7 +70,7 @@ class QueueTask():
         #     task, args=task_args, kwargs=task_kwargs, queue=task_queue, track_started=True,headers={"authenticated_user":user_info})
         task_log = {
             'task_id': task_obj.task_id,
-            'user': user_info['username'],
+            'user': user_info,
             'task_name': task,
             'args': task_args,
             'kwargs': task_kwargs,
