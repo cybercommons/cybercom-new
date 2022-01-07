@@ -14,6 +14,21 @@ logger = logging.getLogger(__name__)
 
 
 def MongoDistinct(field,DB_MongoClient, database, collection, query=None):
+    if len(field.split(',')) > 1:
+        group = {}
+        for itm in field.split(','):
+            group[itm.replace('.', '---')] = "${0}".format(itm)
+        aggregate = [{"$group": {"_id": group}}]
+        iresult = MongoAggregate(
+            json.dumps(aggregate), DB_MongoClient, database, collection, query=query)
+        result = []
+        for itm in iresult:
+            temp = itm['_id']
+            trans = {}
+            for k, v in temp.items():
+                trans[k.replace('---', '.')] = v
+            result.append(trans)
+        return result
     db = DB_MongoClient
     if query:
         try:
@@ -23,7 +38,28 @@ def MongoDistinct(field,DB_MongoClient, database, collection, query=None):
         return db[database][collection].find(**query).distinct(field)
     return db[database][collection].distinct(field)
 
+def MongoAggregate(aggregate, DB_MongoClient, database, collection, query=None):
+    match = None
+    if query:
+        try:
+            query = json.loads(query)
+            query["$match"] = query['filter']
+            del query['filter']
+        except:
+            raise Exception("Query: JSON object could be decoded")
+    try:
+        aggregate = json.loads(aggregate)
+        if query:
+            aggregate.insert(0, query)
+    except:
+        raise Exception("Aggregate: JSON object could be decoded")
+
+    db = DB_MongoClient[database][collection]
+    results = db.aggregate(aggregate)
+    return results
+
 def MongoGroupby(variable,groupby,DB_MongoClient, database, collection, query=None):
+    # Deprecated: Please use the new MongoAggregate
     if query:
         try:
             query = json.loads(query)
@@ -112,66 +148,56 @@ def MongoDataPagination(DB_MongoClient, database, collection, query=None, page=1
 def MongoDataInsert(DB_MongoClient, database, collection,data):
     db = DB_MongoClient
     #Update if data already in collection
-    if '_id' in data:
-        id=data['_id']
-        return MongoDataSave(DB_MongoClient, database, collection,id,data)
-    return db[database][collection].insert(data)
+    # if '_id' in data:
+    #     id=data['_id']
+    #     return MongoDataSave(DB_MongoClient, database, collection,id,data)
+    #return db[database][collection].insert(data)
     if type(data) == type([]):
-        return db[database][collection].insertMany(data)
+        #print(dir(db[database][collection]))
+        return db[database][collection].insert_many(data)
     else:
-        return db[database][collection].insertOne(data)
+        return db[database][collection].insert_one(data)
     
 def MongoDataGet(DB_MongoClient, database, collection,id):
     db = DB_MongoClient
-    id_types=get_id_types(id)
-    for term_id in id_types:
-        try:
-            data = db[database][collection].find_one({'_id':term_id})
-            if data:
-                return data
-        except:
-            # FIXME: why is this a try:except:pass? Added logging
-            logger.error("Error getting mongo data")
-            pass
-    return {"Error":"DATA RECORD NOT FOUND"}
+    term_id=get_id(id)
+    data = db[database][collection].find_one({'_id':term_id})
+    if not data:
+        data = {"Error":"DATA RECORD NOT FOUND"}
+    return data
 def MongoDataDelete(DB_MongoClient, database, collection,id):
     db = DB_MongoClient
-    id_types=get_id_types(id)
-    for term_id in id_types:
-        result= db[database][collection].delete_one({'_id':term_id})
-        if result.deleted_count:
-            return result
-    #else:
-    #    return db[database][collection].delete_one({'_id':id})
+    term_id=get_id(id)
+    result= db[database][collection].delete_one({'_id':term_id})
+    if result.deleted_count:
+        return result
+    else:
+        return {"Error":"UNABLE TO DELETE: DATA RECORD NOT FOUND"}
 def MongoDataSave(DB_MongoClient, database, collection,id,data):
     db = DB_MongoClient
-    if db[database][collection].find_one({'_id':ObjectId(id)}):
-        data['_id']=ObjectId(id) 
-        return db[database][collection].save(data)
-    elif db[database][collection].find_one({'_id':id}):
+    term_id=get_id(id)
+    if db[database][collection].find_one({'_id':term_id}):
         return db[database][collection].save(data)
     else:
         return {"Error":"UNABLE TO UPDATE: DATA RECORD NOT FOUND"}
-def get_id_types(id):
-    results=[]
+
+def is_number(n):
     try:
-        results.append(ObjectId(id))
-    except:
-        # FIXME: Whys is this a try:except:pass? Added logging
-        logger.debug("failed appending ObjectId(id)")
-        pass
-    results = results + [id,str(id)]
-    try:
-        results.append(float(id))
-    except:
-        # FIXME: Whys is this a try:except:pass? Added logging
-        logger.debug("failed appending float(id)")
-        pass
-    try:
-        results.append(int(float(str(id))))
-    except:
-        # FIXME: Whys is this a try:except:pass? Added logging
-        logger.debug("failed appending int(float(str(id))))")
-        pass
-    #print results
-    return results
+        float(n)
+    except ValueError:
+        return False
+    else:
+        return True
+
+def get_id(id):
+    if is_number(id):
+        if '.' in id:
+            result=float(id)
+        else:
+            result=int(id)
+    else:
+        try:
+            result=ObjectId(id)
+        except:
+            result = id
+    return result

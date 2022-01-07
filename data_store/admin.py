@@ -4,7 +4,22 @@ from django.contrib.auth.models import Permission
 # Register your models here.
 from api import config
 from .models import dataStore
-from pymongo import MongoClient
+#from pymongo import MongoClient
+from celery import Celery
+
+
+class celeryConfig:
+    BROKER_URL = config.BROKER_URL
+    BROKER_USE_SSL = config.BROKER_USE_SSL
+    CELERY_SEND_EVENTS = True
+    CELERY_TASK_RESULT_EXPIRES = None
+    CELERY_RESULT_BACKEND = config.CELERY_RESULT_BACKEND
+    CELERY_MONGODB_BACKEND_SETTINGS = config.CELERY_MONGODB_BACKEND_SETTINGS
+
+
+app = Celery()
+app.config_from_object(celeryConfig)
+
 
 def setpermissions(app_label,codename,name):
     try:
@@ -15,8 +30,9 @@ def setpermissions(app_label,codename,name):
          print("Unable to create {0} permission.".format(codename))
 
 #data Store Permissions
-db = MongoClient(host=config.DATA_STORE_MONGO_URI)
-for database in db.database_names():
+#db = MongoClient(host=config.DATA_STORE_MONGO_URI)
+db = app.backend.database.client
+for database in db.list_database_names():
     if not (database in config.DATA_STORE_EXCLUDE):
         for col in db[database].collection_names():
             if not (col in config.DATA_STORE_EXCLUDE):

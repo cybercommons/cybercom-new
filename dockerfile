@@ -1,4 +1,5 @@
-FROM python:3.6-slim-buster
+ARG DOCKER_PYTHON_VERSION=3.6-slim-buster
+FROM python:$DOCKER_PYTHON_VERSION
 
 ARG UNAME=apiuser
 ARG UID=1000

@@ -51,6 +51,10 @@ DATA_STORE_EXCLUDE = ['admin', 'config', 'local', 'default_collection', MONGO_DB
 DATA_STORE_MONGO_URI = MONGO_URI
 DATA_STORE_ANONYMOUS = True
 
+# If you want to enforce perms for SAFE_METHOD
+# Set SAFE_METHOD_PERM_REQUIRED Env Variable
+# Example: "mydb_mycollection,mydb1_mycollection1"
+SAFE_METHOD_PERM_REQUIRED= os.environ.get('SAFE_METHOD_PERM_REQUIRED','').split(',')
 
 # *********** Email Configuration ********************
 if os.getenv('EMAIL_HOST'):

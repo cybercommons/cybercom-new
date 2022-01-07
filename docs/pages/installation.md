@@ -1,5 +1,6 @@
-Cybercommons API 
-=======
+Installation
+============
+
 
 The Cybercommons framework is a Django Rest Framework API. The API leverages MongoDB to provide a Catalog and Data Store for storing metadata and data within a JSON document database. The API also includes Celery which is an asynchronous task queue/jobs based on distributed message passing.
 
@@ -11,6 +12,12 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
 * GNU Make or equivalent
 
 ## Installation
+
+1. Clone Repository
+
+    ```sh
+    git clone https://github.com/cybercommons/cybercommons.git
+    ```
 
 1. Edit values within dc_config/cybercom_config.env
 1. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it. 
@@ -27,7 +34,7 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
     make run
     ```
 
-1. Make Django's static content available. This only needs to be ran once or after changing versions of Django.
+1. Make Django’s static content available. It only needs to be run once or after changing versions of Django.
 
     ```sh
     make collectstatic
@@ -43,9 +50,7 @@ The Cybercommons framework is a Django Rest Framework API. The API leverages Mon
     ```
 
 
-### To run cybercommons on servers with a valid domain name.
-
-## Installation
+## cybercommons Installation on servers with a valid domain name.
 
 1. Edit values within dc_config/cybercom_config.env[NGINX_HOST,NOTIFY_EMAIL,NGINX_TEMPLATE(These values must be set).
 1. Copy secrets_template.env into secrets.env under the same folder and add required credentials into it.

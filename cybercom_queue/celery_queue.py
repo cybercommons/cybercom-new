@@ -1,18 +1,18 @@
-from celery.result import AsyncResult
 import math
 import re
 import pickle  #nosec
 import collections
 import json
-import celery
 import logging
-from pymongo import MongoClient, DESCENDING
+import memcache
+
+from pymongo import DESCENDING
 from rest_framework.reverse import reverse
 from collections import OrderedDict
 from datetime import datetime
-
-from celery.task.control import inspect
+from celery import Celery
 from api import config
+
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +24,10 @@ class celeryConfig:
     CELERY_TASK_RESULT_EXPIRES = None
     CELERY_RESULT_BACKEND = config.CELERY_RESULT_BACKEND
     CELERY_MONGODB_BACKEND_SETTINGS = config.CELERY_MONGODB_BACKEND_SETTINGS
+
+
+app = Celery()
+app.config_from_object(celeryConfig)
 
 
 def check_memcache(host=config.MEMCACHE_HOST, port=config.MEMCACHE_PORT):
@@ -39,31 +43,34 @@ def check_memcache(host=config.MEMCACHE_HOST, port=config.MEMCACHE_PORT):
 
 
 class QueueTask():
-    def __init__(self, database=config.MONGO_DB,
-                 log_collection=config.MONGO_LOG_COLLECTION, 
-                 tomb_collection=config.MONGO_TOMBSTONE_COLLECTION, 
-                 memcache=check_memcache()):
-        self.db = MongoClient(config.DATA_STORE_MONGO_URI)
-        self.database = database
-        self.collection = log_collection
-        self.tomb_collection = tomb_collection
-        self.memcache=memcache
-        celery.Celery().config_from_object(celeryConfig)
-        self.i = inspect()
+    def __init__(self):
+        self.db = app.backend.database.client
+        self.database = config.MONGO_DB
+        self.collection = config.MONGO_LOG_COLLECTION
+        self.tomb_collection = config.MONGO_TOMBSTONE_COLLECTION
+        self.memcache=check_memcache()
+        self.i = app.control.inspect()
+        if self.memcache:
+            self.memcache_client = memcache.Client(
+                ['%s:%s' % (config.MEMCACHE_HOST, config.MEMCACHE_PORT)]
+                )
+        else:
+            self.memcache_client = None
+            logging.warn("Could not connect to memcache server!") 
         
-    def run(self, task, task_args, task_kwargs, task_queue, user, tags):
+    def run(self, task, task_args, task_kwargs, task_queue, user_info, tags):
         """ 
         Submit task to celerey async tasks
         """
-        # print(celeryConfig)
-        #app = Celery().config_from_object(celeryConfig)
 
         # Submit task
-        task_obj = celery.current_app.send_task(
-            task, args=task_args, kwargs=task_kwargs, queue=task_queue, track_started=True)
+        task_obj = app.send_task(
+            task, args=task_args, kwargs=task_kwargs, queue=task_queue, track_started=True,headers={"authenticated_user":user_info})
+        # task_obj = celery.current_app.send_task(
+        #     task, args=task_args, kwargs=task_kwargs, queue=task_queue, track_started=True,headers={"authenticated_user":user_info})
         task_log = {
             'task_id': task_obj.task_id,
-            'user': user,
+            'user': user_info,
             'task_name': task,
             'args': task_args,
             'kwargs': task_kwargs,
@@ -94,7 +101,7 @@ class QueueTask():
             result = [item for item in col.find({'_id': task_id})]
             if len(result) == 0:
                 try:
-                    res = celery.result.AsyncResult(task_id)
+                    res = app.AsyncResult(task_id)
                     return {"status": "%s" % (res.status), "task_id": "%s" % (task_id)}
                 except:
                     raise
@@ -178,13 +185,10 @@ class QueueTask():
         when tasks are being frequently reloaded.
         """
         if self.memcache:
-            import memcache
-            mc = memcache.Client(
-                ['%s:%s' % (config.MEMCACHE_HOST, config.MEMCACHE_PORT)])
             tasks = "REGISTERED_TASKS_%s" % user
             queues = "AVAILABLE_QUEUES_%s" % user
-            mc.delete(tasks)
-            mc.delete(queues)
+            self.memcache_client.delete(tasks)
+            self.memcache_client.delete(queues)
         return self.list_tasks()
         
 
@@ -240,19 +244,26 @@ class QueueTask():
             od = OrderedDict(sorted(result.items()))
         return od
 
-    def task_docstring(self, taskname):
+    def task_docstring(self, taskname, timeout=6000):
         """
         Get task docstring of a registered tasks from celery.
         """
-        data = self.i.registered('__doc__')
-
-        for x, v in data.items():
-            for task in v:
-                name, doc = self.get_taskname_doc(task, ']')
-                if name.strip() == taskname.strip():
-                    doc=doc.replace('.\n',' ')
-                    doc=doc.replace('\n','. ')
-                    return doc
+        # Extracting the docstring is very time consuming, using memcache if avaialble
+        doc = self.memcache_client.get(taskname) if self.memcache else None
+        
+        if doc:
+            return doc
+        else:
+            data = self.i.registered('__doc__')
+            for x, v in data.items():
+                for task in v:
+                    name, doc = self.get_taskname_doc(task, ']')
+                    if name.strip() == taskname.strip():
+                        doc=doc.replace('.\n',' ')
+                        doc=doc.replace('\n','. ')
+                        if self.memcache:  # add task docstring to memcache
+                            self.memcache_client.set(taskname, doc, timeout)
+                        return doc
         return None
 
     def get_taskname_doc(self, thestring, ending):
@@ -270,23 +281,20 @@ class QueueTask():
         """
         try:
             if self.memcache:
-                import memcache
-                mc = memcache.Client(
-                    ['%s:%s' % (config.MEMCACHE_HOST, config.MEMCACHE_PORT)])
                 tasks = "REGISTERED_TASKS_%s" % user
                 queues = "AVAILABLE_QUEUES_%s" % user
-                REGISTERED_TASKS = mc.get(tasks)
-                AVAILABLE_QUEUES = mc.get(queues)
+                REGISTERED_TASKS = self.memcache_client.get(tasks)
+                AVAILABLE_QUEUES = self.memcache_client.get(queues)
                 if not REGISTERED_TASKS:
                     REGISTERED_TASKS = set()
                     for item in self.i.registered().values():
                         REGISTERED_TASKS.update(item)
-                    mc.set(tasks, REGISTERED_TASKS, timeout)
-                    REGISTERED_TASKS = mc.get(tasks)
+                    self.memcache_client.set(tasks, REGISTERED_TASKS, timeout)
+                    REGISTERED_TASKS = self.memcache_client.get(tasks)
                 if not AVAILABLE_QUEUES:
-                    mc.set(queues, set([item[0]["exchange"]["name"]
+                    self.memcache_client.set(queues, set([item[0]["exchange"]["name"]
                                         for item in self.i.active_queues().values()]), timeout)
-                    AVAILABLE_QUEUES = mc.get(queues)
+                    AVAILABLE_QUEUES = self.memcache_client.get(queues)
             else:
                 REGISTERED_TASKS = set()
                 for item in self.i.registered().values():

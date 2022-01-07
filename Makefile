@@ -2,8 +2,9 @@ include dc_config/cybercom_config.env
 include dc_config/secrets.env
 
 COMPOSE_INIT = docker-compose -f dc_config/images/docker-compose-init.yml
+CERTBOT_INIT = docker-compose -f dc_config/images/certbot-initialization.yml
 
-.PHONY: init intidb initssl dbshell dbexport dbimport run stop test restart_api init_certbot
+.PHONY: init intidb initssl superuser init_certbot renew_certbot shell apishell dbshell build force_build run stop test restart_api collectstatic
 
 .EXPORT_ALL_VARIABLES:
 UID=$(shell id -u)
@@ -27,11 +28,27 @@ superuser:
 	@docker-compose run --rm cybercom_api ./manage.py createsuperuser 
 
 init_certbot:
-	@docker-compose -f dc_config/images/certbot-initialization.yml build
-	@docker-compose -f dc_config/images/certbot-initialization.yml up --abort-on-container-exit
-	@docker-compose -f dc_config/images/certbot-initialization.yml down
+	$(CERTBOT_INIT) build
+	$(CERTBOT_INIT) up --abort-on-container-exit
+	$(CERTBOT_INIT) down
+
+renew_certbot:
+	$(CERTBOT_INIT) run --rm cybercom_certbot
+	# FIXME: the following is not reloading certs
+	#@docker-compose exec cybercom_nginx nginx -s reload
+	# This is a work around until the reload signal is fixed
+	@docker-compose restart cybercom_nginx
+
+shell:
+	@echo "Loading new shell with configured environment"
+	@$$SHELL
+
+apishell:
+	@echo "Launching shell into Django"
+	@docker-compose exec cybercom_api python manage.py shell
 
 dbshell:
+	@echo "Launching shell into MongoDB"
 	@docker-compose exec cybercom_mongo mongo admin \
 		--tls \
 		--host cybercom_mongo \
@@ -40,46 +57,24 @@ dbshell:
 		--username $$MONGO_USERNAME \
 		--password $$MONGO_PASSWORD
 
-db ?= "catalog"
-collection ?= "digital_objects"
-dbexport:
-	@docker-compose exec cybercom_mongo mongoexport \
-		--quiet \
-		--db=$(db) \
-		--collection=$(collection) \
-		--ssl \
-		--host cybercom_mongo \
-		--sslPEMKeyFile /ssl/client/mongodb.pem \
-		--sslCAFile /ssl/testca/cacert.pem \
-		--username $$MONGO_USERNAME \
-		--password $$MONGO_PASSWORD
-
-dbimport:
-	@docker-compose exec -T cybercom_mongo mongoimport \
-		--db=$(db) \
-		--collection=$(collection) \
-		--ssl \
-		--host cybercom_mongo \
-		--sslPEMKeyFile /ssl/client/mongodb.pem \
-		--sslCAFile /ssl/testca/cacert.pem \
-		--username $$MONGO_USERNAME \
-		--password $$MONGO_PASSWORD
-
 build:
-	@docker-compose build
+	@docker-compose --compatibility build
+
+force_build:
+	@docker-compose --compatibility build --no-cache
 
 run:
-	@docker-compose up -d
+	@docker-compose --compatibility up -d
 
 stop:
-	@docker-compose down
+	@docker-compose --compatibility down
 
 test:
-	@tox -e django
+	@docker-compose exec cybercom_api python -Wa manage.py test
 
 restart_api:
 	@docker-compose restart cybercom_api
 
 collectstatic:
-	@docker-compose run --rm cybercom_api ./manage.py collectstatic
+	@docker-compose run --rm cybercom_api ./manage.py collectstatic --noinput
 
