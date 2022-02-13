@@ -21,6 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPLICATION_TITLE = config.APPLICATION_TITLE
 API_VERSION='2.0'
 
+# Set default model primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # Session cookies
 # https://docs.djangoproject.com/en/2.2/ref/settings/#session-cookie-domain
 # wild card '*.example.edu'
@@ -170,7 +173,7 @@ SIMPLE_JWT = {
 }
 
 # Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
