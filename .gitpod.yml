@@ -7,7 +7,7 @@
 mainConfiguration: https://github.com/Rithsek99/cybercommons.git
 # submodule
 additionalRepositories: 
-  - url: https://github.com/Rithsek99/celery-remote-worker.git
+  - url: https://github.com/oulib-datacatalog/celery-remote-worker/tree/test
 tasks:
   - before: cp dc_config/secrets_template.env dc_config/secrets.env
     init: make init && make build
