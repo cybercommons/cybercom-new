@@ -4,10 +4,10 @@
 
 # add submodule and main workspace
 
-mainConfiguration: git@github.com:Rithsek99/cybercommons.git
+mainConfiguration: https://github.com/Rithsek99/cybercommons.git
 # submodule
 additionalRepositories: 
-  - url: git@github.com:Rithsek99/celery-remote-worker.git
+  - url: https://github.com/Rithsek99/celery-remote-worker.git
 tasks:
   - before: cp dc_config/secrets_template.env dc_config/secrets.env
     init: make init && make build
